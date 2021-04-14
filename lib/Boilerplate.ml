@@ -846,13 +846,6 @@ and map_anon_choice_stor_class_spec_5764fed (env : env) (x : CST.anon_choice_sto
   | `Ms_decl_modi x -> map_ms_declspec_modifier env x
   )
 
-and map_anon_choice_stor_class_spec_74adcb0 (env : env) (x : CST.anon_choice_stor_class_spec_74adcb0) =
-  (match x with
-  | `Stor_class_spec x -> map_storage_class_specifier env x
-  | `Type_qual x -> map_type_qualifier env x
-  | `Attr_spec x -> map_attribute_specifier env x
-  )
-
 and map_anon_choice_type_desc_4d9cafa (env : env) (x : CST.anon_choice_type_desc_4d9cafa) =
   (match x with
   | `Type_desc x -> map_type_descriptor env x
@@ -870,12 +863,6 @@ and map_anon_choice_type_qual_01506e0 (env : env) (x : CST.anon_choice_type_qual
   | `Noex x -> map_noexcept env x
   | `Throw_spec x -> map_throw_specifier env x
   | `Trai_ret_type x -> map_trailing_return_type env x
-  )
-
-and map_anon_choice_virt_func_spec_3025abc (env : env) (x : CST.anon_choice_virt_func_spec_3025abc) =
-  (match x with
-  | `Virt_func_spec x -> map_virtual_function_specifier env x
-  | `Expl_func_spec x -> map_explicit_function_specifier env x
   )
 
 and map_argument_list (env : env) ((v1, v2, v3) : CST.argument_list) =
@@ -1230,23 +1217,41 @@ and map_conditional_expression (env : env) ((v1, v2, v3, v4, v5) : CST.condition
   let v5 = map_expression env v5 in
   todo env (v1, v2, v3, v4, v5)
 
-and map_constructor_or_destructor_definition (env : env) ((v1, v2, v3, v4, v5) : CST.constructor_or_destructor_definition) =
+and map_constructor_or_destructor_declaration (env : env) ((v1, v2, v3) : CST.constructor_or_destructor_declaration) =
   let v1 =
-    List.map (map_anon_choice_stor_class_spec_74adcb0 env) v1
-  in
-  let v2 =
-    (match v2 with
-    | Some x -> map_anon_choice_virt_func_spec_3025abc env x
+    (match v1 with
+    | Some x -> map_constructor_specifiers env x
     | None -> todo env ())
   in
-  let v3 = map_function_declarator env v3 in
-  let v4 =
-    (match v4 with
+  let v2 = map_function_declarator env v2 in
+  let v3 = token env v3 (* ";" *) in
+  todo env (v1, v2, v3)
+
+and map_constructor_or_destructor_definition (env : env) ((v1, v2, v3, v4) : CST.constructor_or_destructor_definition) =
+  let v1 =
+    (match v1 with
+    | Some x -> map_constructor_specifiers env x
+    | None -> todo env ())
+  in
+  let v2 = map_function_declarator env v2 in
+  let v3 =
+    (match v3 with
     | Some x -> map_field_initializer_list env x
     | None -> todo env ())
   in
-  let v5 = map_anon_choice_comp_stmt_be91723 env v5 in
-  todo env (v1, v2, v3, v4, v5)
+  let v4 = map_anon_choice_comp_stmt_be91723 env v4 in
+  todo env (v1, v2, v3, v4)
+
+and map_constructor_specifiers (env : env) (xs : CST.constructor_specifiers) =
+  List.map (fun x ->
+    (match x with
+    | `Stor_class_spec x -> map_storage_class_specifier env x
+    | `Type_qual x -> map_type_qualifier env x
+    | `Attr_spec x -> map_attribute_specifier env x
+    | `Virt_func_spec x -> map_virtual_function_specifier env x
+    | `Expl_func_spec x -> map_explicit_function_specifier env x
+    )
+  ) xs
 
 and map_declaration (env : env) ((v1, v2, v3, v4, v5) : CST.declaration) =
   let v1 = List.map (map_attribute env) v1 in
@@ -1542,15 +1547,8 @@ and map_field_declaration_list_item (env : env) (x : CST.field_declaration_list_
       todo env (v1, v2, v3, v4, v5)
   | `Cons_or_dest_defi x ->
       map_constructor_or_destructor_definition env x
-  | `Cons_or_dest_decl (v1, v2, v3) ->
-      let v1 =
-        (match v1 with
-        | Some x -> map_anon_choice_virt_func_spec_3025abc env x
-        | None -> todo env ())
-      in
-      let v2 = map_function_declarator env v2 in
-      let v3 = token env v3 (* ";" *) in
-      todo env (v1, v2, v3)
+  | `Cons_or_dest_decl x ->
+      map_constructor_or_destructor_declaration env x
   | `Op_cast_defi x -> map_operator_cast_definition env x
   | `Op_cast_decl x -> map_operator_cast_declaration env x
   | `Friend_decl (v1, v2) ->
@@ -1910,7 +1908,7 @@ and map_operator_cast (env : env) ((v1, v2, v3, v4) : CST.operator_cast) =
 and map_operator_cast_declaration (env : env) ((v1, v2, v3, v4) : CST.operator_cast_declaration) =
   let v1 =
     (match v1 with
-    | Some x -> map_anon_choice_virt_func_spec_3025abc env x
+    | Some x -> map_constructor_specifiers env x
     | None -> todo env ())
   in
   let v2 = map_operator_cast env v2 in
@@ -1925,18 +1923,15 @@ and map_operator_cast_declaration (env : env) ((v1, v2, v3, v4) : CST.operator_c
   let v4 = token env v4 (* ";" *) in
   todo env (v1, v2, v3, v4)
 
-and map_operator_cast_definition (env : env) ((v1, v2, v3, v4) : CST.operator_cast_definition) =
+and map_operator_cast_definition (env : env) ((v1, v2, v3) : CST.operator_cast_definition) =
   let v1 =
-    List.map (map_anon_choice_stor_class_spec_74adcb0 env) v1
-  in
-  let v2 =
-    (match v2 with
-    | Some x -> map_anon_choice_virt_func_spec_3025abc env x
+    (match v1 with
+    | Some x -> map_constructor_specifiers env x
     | None -> todo env ())
   in
-  let v3 = map_operator_cast env v3 in
-  let v4 = map_anon_choice_comp_stmt_be91723 env v4 in
-  todo env (v1, v2, v3, v4)
+  let v2 = map_operator_cast env v2 in
+  let v3 = map_anon_choice_comp_stmt_be91723 env v3 in
+  todo env (v1, v2, v3)
 
 and map_optional_parameter_declaration (env : env) ((v1, v2, v3, v4) : CST.optional_parameter_declaration) =
   let v1 = map_declaration_specifiers env v1 in
@@ -2270,8 +2265,11 @@ and map_template_declaration (env : env) ((v1, v2, v3) : CST.template_declaratio
     | `Decl x -> map_declaration env x
     | `Temp_decl x -> map_template_declaration env x
     | `Func_defi x -> map_function_definition env x
+    | `Cons_or_dest_decl x ->
+        map_constructor_or_destructor_declaration env x
     | `Cons_or_dest_defi x ->
         map_constructor_or_destructor_definition env x
+    | `Op_cast_decl x -> map_operator_cast_declaration env x
     | `Op_cast_defi x -> map_operator_cast_definition env x
     )
   in

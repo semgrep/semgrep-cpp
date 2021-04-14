@@ -604,12 +604,6 @@ and anon_choice_stor_class_spec_5764fed = [
   | `Ms_decl_modi of ms_declspec_modifier
 ]
 
-and anon_choice_stor_class_spec_74adcb0 = [
-    `Stor_class_spec of storage_class_specifier
-  | `Type_qual of type_qualifier
-  | `Attr_spec of attribute_specifier
-]
-
 and anon_choice_type_desc_4d9cafa = [
     `Type_desc of type_descriptor
   | `Type_param_pack_expa of (type_descriptor * Token.t (* "..." *))
@@ -622,11 +616,6 @@ and anon_choice_type_qual_01506e0 = [
   | `Noex of noexcept
   | `Throw_spec of throw_specifier
   | `Trai_ret_type of trailing_return_type
-]
-
-and anon_choice_virt_func_spec_3025abc = [
-    `Virt_func_spec of virtual_function_specifier
-  | `Expl_func_spec of explicit_function_specifier
 ]
 
 and argument_list = (
@@ -813,13 +802,28 @@ and conditional_expression = (
   * expression
 )
 
+and constructor_or_destructor_declaration = (
+    constructor_specifiers option
+  * function_declarator
+  * Token.t (* ";" *)
+)
+
 and constructor_or_destructor_definition = (
-    anon_choice_stor_class_spec_74adcb0 list (* zero or more *)
-  * anon_choice_virt_func_spec_3025abc option
+    constructor_specifiers option
   * function_declarator
   * field_initializer_list option
   * anon_choice_comp_stmt_be91723
 )
+
+and constructor_specifiers =
+  [
+      `Stor_class_spec of storage_class_specifier
+    | `Type_qual of type_qualifier
+    | `Attr_spec of attribute_specifier
+    | `Virt_func_spec of virtual_function_specifier
+    | `Expl_func_spec of explicit_function_specifier
+  ]
+    list (* one or more *)
 
 and declaration = (
     attribute list (* zero or more *)
@@ -991,11 +995,7 @@ and field_declaration_list_item = [
       * anon_choice_comp_stmt_be91723
     )
   | `Cons_or_dest_defi of constructor_or_destructor_definition
-  | `Cons_or_dest_decl of (
-        anon_choice_virt_func_spec_3025abc option
-      * function_declarator
-      * Token.t (* ";" *)
-    )
+  | `Cons_or_dest_decl of constructor_or_destructor_declaration
   | `Op_cast_defi of operator_cast_definition
   | `Op_cast_decl of operator_cast_declaration
   | `Friend_decl of (
@@ -1194,15 +1194,14 @@ and operator_cast = (
 )
 
 and operator_cast_declaration = (
-    anon_choice_virt_func_spec_3025abc option
+    constructor_specifiers option
   * operator_cast
   * (Token.t (* "=" *) * expression) option
   * Token.t (* ";" *)
 )
 
 and operator_cast_definition = (
-    anon_choice_stor_class_spec_74adcb0 list (* zero or more *)
-  * anon_choice_virt_func_spec_3025abc option
+    constructor_specifiers option
   * operator_cast
   * anon_choice_comp_stmt_be91723
 )
@@ -1417,7 +1416,9 @@ and template_declaration = (
       | `Decl of declaration
       | `Temp_decl of template_declaration
       | `Func_defi of function_definition
+      | `Cons_or_dest_decl of constructor_or_destructor_declaration
       | `Cons_or_dest_defi of constructor_or_destructor_definition
+      | `Op_cast_decl of operator_cast_declaration
       | `Op_cast_defi of operator_cast_definition
     ]
 )
@@ -1726,13 +1727,6 @@ type class_specifier (* inlined *) = (
 
 type comma_expression (* inlined *) = (
     expression * Token.t (* "," *) * anon_choice_exp_55b4dba
-)
-[@@deriving sexp_of]
-
-type constructor_or_destructor_declaration (* inlined *) = (
-    anon_choice_virt_func_spec_3025abc option
-  * function_declarator
-  * Token.t (* ";" *)
 )
 [@@deriving sexp_of]
 

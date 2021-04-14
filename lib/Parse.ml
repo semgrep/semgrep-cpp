@@ -1155,10 +1155,7 @@ let children_regexps : (string * Run.exp option) list = [
   Some (
     Seq [
       Opt (
-        Alt [|
-          Token (Name "virtual_function_specifier");
-          Token (Name "explicit_function_specifier");
-        |];
+        Token (Name "constructor_specifiers");
       );
       Token (Name "function_declarator");
       Token (Literal ";");
@@ -1167,18 +1164,8 @@ let children_regexps : (string * Run.exp option) list = [
   "constructor_or_destructor_definition",
   Some (
     Seq [
-      Repeat (
-        Alt [|
-          Token (Name "storage_class_specifier");
-          Token (Name "type_qualifier");
-          Token (Name "attribute_specifier");
-        |];
-      );
       Opt (
-        Alt [|
-          Token (Name "virtual_function_specifier");
-          Token (Name "explicit_function_specifier");
-        |];
+        Token (Name "constructor_specifiers");
       );
       Token (Name "function_declarator");
       Opt (
@@ -1190,6 +1177,18 @@ let children_regexps : (string * Run.exp option) list = [
         Token (Name "delete_method_clause");
       |];
     ];
+  );
+  "constructor_specifiers",
+  Some (
+    Repeat1 (
+      Alt [|
+        Token (Name "storage_class_specifier");
+        Token (Name "type_qualifier");
+        Token (Name "attribute_specifier");
+        Token (Name "virtual_function_specifier");
+        Token (Name "explicit_function_specifier");
+      |];
+    );
   );
   "declaration",
   Some (
@@ -2130,10 +2129,7 @@ let children_regexps : (string * Run.exp option) list = [
   Some (
     Seq [
       Opt (
-        Alt [|
-          Token (Name "virtual_function_specifier");
-          Token (Name "explicit_function_specifier");
-        |];
+        Token (Name "constructor_specifiers");
       );
       Token (Name "operator_cast");
       Opt (
@@ -2148,18 +2144,8 @@ let children_regexps : (string * Run.exp option) list = [
   "operator_cast_definition",
   Some (
     Seq [
-      Repeat (
-        Alt [|
-          Token (Name "storage_class_specifier");
-          Token (Name "type_qualifier");
-          Token (Name "attribute_specifier");
-        |];
-      );
       Opt (
-        Alt [|
-          Token (Name "virtual_function_specifier");
-          Token (Name "explicit_function_specifier");
-        |];
+        Token (Name "constructor_specifiers");
       );
       Token (Name "operator_cast");
       Alt [|
@@ -2878,7 +2864,9 @@ let children_regexps : (string * Run.exp option) list = [
         Token (Name "declaration");
         Token (Name "template_declaration");
         Token (Name "function_definition");
+        Token (Name "constructor_or_destructor_declaration");
         Token (Name "constructor_or_destructor_definition");
+        Token (Name "operator_cast_declaration");
         Token (Name "operator_cast_definition");
       |];
     ];
@@ -5956,17 +5944,7 @@ and trans_constructor_or_destructor_declaration ((kind, body) : mt) : CST.constr
           (
             Run.opt
               (fun v ->
-                (match v with
-                | Alt (0, v) ->
-                    `Virt_func_spec (
-                      trans_virtual_function_specifier (Run.matcher_token v)
-                    )
-                | Alt (1, v) ->
-                    `Expl_func_spec (
-                      trans_explicit_function_specifier (Run.matcher_token v)
-                    )
-                | _ -> assert false
-                )
+                trans_constructor_specifiers (Run.matcher_token v)
               )
               v0
             ,
@@ -5981,52 +5959,22 @@ and trans_constructor_or_destructor_definition ((kind, body) : mt) : CST.constru
   match body with
   | Children v ->
       (match v with
-      | Seq [v0; v1; v2; v3; v4] ->
+      | Seq [v0; v1; v2; v3] ->
           (
-            Run.repeat
+            Run.opt
               (fun v ->
-                (match v with
-                | Alt (0, v) ->
-                    `Stor_class_spec (
-                      trans_storage_class_specifier (Run.matcher_token v)
-                    )
-                | Alt (1, v) ->
-                    `Type_qual (
-                      trans_type_qualifier (Run.matcher_token v)
-                    )
-                | Alt (2, v) ->
-                    `Attr_spec (
-                      trans_attribute_specifier (Run.matcher_token v)
-                    )
-                | _ -> assert false
-                )
+                trans_constructor_specifiers (Run.matcher_token v)
               )
               v0
             ,
-            Run.opt
-              (fun v ->
-                (match v with
-                | Alt (0, v) ->
-                    `Virt_func_spec (
-                      trans_virtual_function_specifier (Run.matcher_token v)
-                    )
-                | Alt (1, v) ->
-                    `Expl_func_spec (
-                      trans_explicit_function_specifier (Run.matcher_token v)
-                    )
-                | _ -> assert false
-                )
-              )
-              v1
-            ,
-            trans_function_declarator (Run.matcher_token v2),
+            trans_function_declarator (Run.matcher_token v1),
             Run.opt
               (fun v ->
                 trans_field_initializer_list (Run.matcher_token v)
               )
-              v3
+              v2
             ,
-            (match v4 with
+            (match v3 with
             | Alt (0, v) ->
                 `Comp_stmt (
                   trans_compound_statement (Run.matcher_token v)
@@ -6044,6 +5992,38 @@ and trans_constructor_or_destructor_definition ((kind, body) : mt) : CST.constru
           )
       | _ -> assert false
       )
+  | Leaf _ -> assert false
+
+and trans_constructor_specifiers ((kind, body) : mt) : CST.constructor_specifiers =
+  match body with
+  | Children v ->
+      Run.repeat1
+        (fun v ->
+          (match v with
+          | Alt (0, v) ->
+              `Stor_class_spec (
+                trans_storage_class_specifier (Run.matcher_token v)
+              )
+          | Alt (1, v) ->
+              `Type_qual (
+                trans_type_qualifier (Run.matcher_token v)
+              )
+          | Alt (2, v) ->
+              `Attr_spec (
+                trans_attribute_specifier (Run.matcher_token v)
+              )
+          | Alt (3, v) ->
+              `Virt_func_spec (
+                trans_virtual_function_specifier (Run.matcher_token v)
+              )
+          | Alt (4, v) ->
+              `Expl_func_spec (
+                trans_explicit_function_specifier (Run.matcher_token v)
+              )
+          | _ -> assert false
+          )
+        )
+        v
   | Leaf _ -> assert false
 
 and trans_declaration ((kind, body) : mt) : CST.declaration =
@@ -8462,17 +8442,7 @@ and trans_operator_cast_declaration ((kind, body) : mt) : CST.operator_cast_decl
           (
             Run.opt
               (fun v ->
-                (match v with
-                | Alt (0, v) ->
-                    `Virt_func_spec (
-                      trans_virtual_function_specifier (Run.matcher_token v)
-                    )
-                | Alt (1, v) ->
-                    `Expl_func_spec (
-                      trans_explicit_function_specifier (Run.matcher_token v)
-                    )
-                | _ -> assert false
-                )
+                trans_constructor_specifiers (Run.matcher_token v)
               )
               v0
             ,
@@ -8500,46 +8470,16 @@ and trans_operator_cast_definition ((kind, body) : mt) : CST.operator_cast_defin
   match body with
   | Children v ->
       (match v with
-      | Seq [v0; v1; v2; v3] ->
+      | Seq [v0; v1; v2] ->
           (
-            Run.repeat
+            Run.opt
               (fun v ->
-                (match v with
-                | Alt (0, v) ->
-                    `Stor_class_spec (
-                      trans_storage_class_specifier (Run.matcher_token v)
-                    )
-                | Alt (1, v) ->
-                    `Type_qual (
-                      trans_type_qualifier (Run.matcher_token v)
-                    )
-                | Alt (2, v) ->
-                    `Attr_spec (
-                      trans_attribute_specifier (Run.matcher_token v)
-                    )
-                | _ -> assert false
-                )
+                trans_constructor_specifiers (Run.matcher_token v)
               )
               v0
             ,
-            Run.opt
-              (fun v ->
-                (match v with
-                | Alt (0, v) ->
-                    `Virt_func_spec (
-                      trans_virtual_function_specifier (Run.matcher_token v)
-                    )
-                | Alt (1, v) ->
-                    `Expl_func_spec (
-                      trans_explicit_function_specifier (Run.matcher_token v)
-                    )
-                | _ -> assert false
-                )
-              )
-              v1
-            ,
-            trans_operator_cast (Run.matcher_token v2),
-            (match v3 with
+            trans_operator_cast (Run.matcher_token v1),
+            (match v2 with
             | Alt (0, v) ->
                 `Comp_stmt (
                   trans_compound_statement (Run.matcher_token v)
@@ -10375,10 +10315,18 @@ and trans_template_declaration ((kind, body) : mt) : CST.template_declaration =
                   trans_function_definition (Run.matcher_token v)
                 )
             | Alt (5, v) ->
+                `Cons_or_dest_decl (
+                  trans_constructor_or_destructor_declaration (Run.matcher_token v)
+                )
+            | Alt (6, v) ->
                 `Cons_or_dest_defi (
                   trans_constructor_or_destructor_definition (Run.matcher_token v)
                 )
-            | Alt (6, v) ->
+            | Alt (7, v) ->
+                `Op_cast_decl (
+                  trans_operator_cast_declaration (Run.matcher_token v)
+                )
+            | Alt (8, v) ->
                 `Op_cast_defi (
                   trans_operator_cast_definition (Run.matcher_token v)
                 )
