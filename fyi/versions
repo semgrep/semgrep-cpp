@@ -1,0 +1,28 @@
+File: semgrep-grammars/src/tree-sitter-cpp/LICENSE
+Git repo name: ocaml-tree-sitter
+Last git commit:
+  commit a35a275df92e7583df38f2de2562361f2b69987e
+  Author: sebastiansturm <mail@sebastian-sturm.de>
+  Date:   Sun Dec 13 20:27:21 2020 +0100
+  
+      Highlight raw string literals (#91)
+---
+File: semgrep-grammars/src/tree-sitter-cpp/grammar.js
+Git repo name: ocaml-tree-sitter
+Last git commit:
+  commit a35a275df92e7583df38f2de2562361f2b69987e
+  Author: sebastiansturm <mail@sebastian-sturm.de>
+  Date:   Sun Dec 13 20:27:21 2020 +0100
+  
+      Highlight raw string literals (#91)
+---
+File: semgrep-grammars/src/semgrep-cpp/grammar.js
+Git repo name: ocaml-tree-sitter
+Last git commit:
+  commit 9bca49eafc8489bc0d508057079bec9b7d10f65e
+  Author: Martin Jambon <martin@returntocorp.com>
+  Date:   Wed Apr 14 16:44:28 2021 -0700
+  
+      Include new file 'fyi/versions' that tracks git info associated with
+      each file in the "FYI" list.
+---
