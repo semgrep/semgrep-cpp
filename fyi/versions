@@ -1,5 +1,5 @@
 File: semgrep-grammars/src/tree-sitter-cpp/LICENSE
-Git repo name: ocaml-tree-sitter
+Git repo name: tree-sitter-cpp
 Latest commit in repo: a35a275df92e7583df38f2de2562361f2b69987e
 Last change in file:
   commit d8966822015417d060ffaafd95a71a49dd28ec99
@@ -9,7 +9,7 @@ Last change in file:
       Initial commit
 ---
 File: semgrep-grammars/src/tree-sitter-cpp/grammar.js
-Git repo name: ocaml-tree-sitter
+Git repo name: tree-sitter-cpp
 Latest commit in repo: a35a275df92e7583df38f2de2562361f2b69987e
 Last change in file:
   commit fb8250eef8b4cf1ce104806c50dc206e388b0e72
@@ -34,7 +34,7 @@ Last change in file:
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
 Git repo name: ocaml-tree-sitter
-Latest commit in repo: fb2667d48dd92c95c1943d7899c5559b9ea1316e
+Latest commit in repo: f0469e1b59ee4df9d8cdded2a7d5cb124f3ea264
 Last change in file:
   commit 405c8e6cdcf5a2f8289b7676438a4fb96ef1d05e
   Author: Martin Jambon <martin@returntocorp.com>
