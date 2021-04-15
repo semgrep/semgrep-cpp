@@ -1,27 +1,44 @@
 File: semgrep-grammars/src/tree-sitter-cpp/LICENSE
 Git repo name: ocaml-tree-sitter
-Last git commit:
-  commit a35a275df92e7583df38f2de2562361f2b69987e
-  Author: sebastiansturm <mail@sebastian-sturm.de>
-  Date:   Sun Dec 13 20:27:21 2020 +0100
+Latest commit in repo: a35a275df92e7583df38f2de2562361f2b69987e
+Last change in file:
+  commit d8966822015417d060ffaafd95a71a49dd28ec99
+  Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
+  Date:   Fri Jan 15 11:04:19 2016 -0800
   
-      Highlight raw string literals (#91)
+      Initial commit
 ---
 File: semgrep-grammars/src/tree-sitter-cpp/grammar.js
 Git repo name: ocaml-tree-sitter
-Last git commit:
-  commit a35a275df92e7583df38f2de2562361f2b69987e
-  Author: sebastiansturm <mail@sebastian-sturm.de>
-  Date:   Sun Dec 13 20:27:21 2020 +0100
+Latest commit in repo: a35a275df92e7583df38f2de2562361f2b69987e
+Last change in file:
+  commit fb8250eef8b4cf1ce104806c50dc206e388b0e72
+  Author: jdrouhard <john@jmdtech.org>
+  Date:   Mon Nov 2 11:46:58 2020 -0600
   
-      Highlight raw string literals (#91)
+      Fixes for constructor declarations (#89)
+      
+      Constructor declarations can have the same decl-specifiers as
+      constructor definitions. This adds a new rule to match as many
+      "constructor specifiers" that are present in any order before the
+      function decl itself, and adds the rule to constructor declarations and
+      constructor definitions.
+      
+      The cast operator can also have any of these specifiers in any order
+      before the declaration, so this commit also changes the cast operator
+      declaration and definition to use the new rule as well.
+      
+      Finally, constructor declarations and cast operator declarations can be
+      part of a template declaration in addition to the definitions, so add
+      them both to the template_declaration rule.
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
 Git repo name: ocaml-tree-sitter
-Last git commit:
-  commit b1b6d3e7595b5368f61588db168fea32774b3f81
+Latest commit in repo: fb2667d48dd92c95c1943d7899c5559b9ea1316e
+Last change in file:
+  commit 405c8e6cdcf5a2f8289b7676438a4fb96ef1d05e
   Author: Martin Jambon <martin@returntocorp.com>
-  Date:   Wed Apr 14 16:59:53 2021 -0700
+  Date:   Wed Feb 17 18:59:42 2021 -0800
   
-      Add release file containing the tree-sitter version
+      Migrate cpp to modern setup
 ---
