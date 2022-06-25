@@ -33,7 +33,7 @@ let extras = [
 ]
 
 let children_regexps : (string * Run.exp option) list = [
-  "imm_tok_LPAR", None;
+  "imm_tok_lpar", None;
   "imm_tok_pat_36637e2", None;
   "null", None;
   "identifier", None;
@@ -157,17 +157,17 @@ let children_regexps : (string * Run.exp option) list = [
     ];
   );
   "false", None;
-  "tok_GT", None;
+  "tok_prec_p1_gt", None;
   "pat_9d92f6a", None;
   "true", None;
   "operator_name", None;
   "ms_unsigned_ptr_modifier", None;
   "pat_ca8830e", None;
-  "imm_tok_pat_c7f65b4", None;
+  "imm_tok_prec_p1_pat_c7f65b4", None;
   "preproc_params",
   Some (
     Seq [
-      Token (Name "imm_tok_LPAR");
+      Token (Name "imm_tok_lpar");
       Opt (
         Seq [
           Alt [|
@@ -360,7 +360,7 @@ let children_regexps : (string * Run.exp option) list = [
       |];
       Repeat (
         Alt [|
-          Token (Name "imm_tok_pat_c7f65b4");
+          Token (Name "imm_tok_prec_p1_pat_c7f65b4");
           Token (Name "escape_sequence");
         |];
       );
@@ -2850,7 +2850,7 @@ let children_regexps : (string * Run.exp option) list = [
           );
         ];
       );
-      Token (Name "tok_GT");
+      Token (Name "tok_prec_p1_gt");
     ];
   );
   "template_declaration",
@@ -2933,7 +2933,7 @@ let children_regexps : (string * Run.exp option) list = [
           );
         ];
       );
-      Token (Name "tok_GT");
+      Token (Name "tok_prec_p1_gt");
     ];
   );
   "template_template_parameter_declaration",
@@ -3240,7 +3240,7 @@ let children_regexps : (string * Run.exp option) list = [
   );
 ]
 
-let trans_imm_tok_LPAR ((kind, body) : mt) : CST.imm_tok_LPAR =
+let trans_imm_tok_lpar ((kind, body) : mt) : CST.imm_tok_lpar =
   match body with
   | Leaf v -> v
   | Children _ -> assert false
@@ -3592,7 +3592,7 @@ let trans_false_ ((kind, body) : mt) : CST.false_ =
   | Leaf v -> v
   | Children _ -> assert false
 
-let trans_tok_GT ((kind, body) : mt) : CST.tok_GT =
+let trans_tok_prec_p1_gt ((kind, body) : mt) : CST.tok_prec_p1_gt =
   match body with
   | Leaf v -> v
   | Children _ -> assert false
@@ -3622,7 +3622,7 @@ let trans_pat_ca8830e ((kind, body) : mt) : CST.pat_ca8830e =
   | Leaf v -> v
   | Children _ -> assert false
 
-let trans_imm_tok_pat_c7f65b4 ((kind, body) : mt) : CST.imm_tok_pat_c7f65b4 =
+let trans_imm_tok_prec_p1_pat_c7f65b4 ((kind, body) : mt) : CST.imm_tok_prec_p1_pat_c7f65b4 =
   match body with
   | Leaf v -> v
   | Children _ -> assert false
@@ -3633,7 +3633,7 @@ let trans_preproc_params ((kind, body) : mt) : CST.preproc_params =
       (match v with
       | Seq [v0; v1; v2] ->
           (
-            trans_imm_tok_LPAR (Run.matcher_token v0),
+            trans_imm_tok_lpar (Run.matcher_token v0),
             Run.opt
               (fun v ->
                 (match v with
@@ -4062,8 +4062,8 @@ let trans_string_literal ((kind, body) : mt) : CST.string_literal =
               (fun v ->
                 (match v with
                 | Alt (0, v) ->
-                    `Imm_tok_pat_c7f65b4 (
-                      trans_imm_tok_pat_c7f65b4 (Run.matcher_token v)
+                    `Imm_tok_prec_p1_pat_c7f65b4 (
+                      trans_imm_tok_prec_p1_pat_c7f65b4 (Run.matcher_token v)
                     )
                 | Alt (1, v) ->
                     `Esc_seq (
@@ -10279,7 +10279,7 @@ and trans_template_argument_list ((kind, body) : mt) : CST.template_argument_lis
               )
               v1
             ,
-            trans_tok_GT (Run.matcher_token v2)
+            trans_tok_prec_p1_gt (Run.matcher_token v2)
           )
       | _ -> assert false
       )
@@ -10497,7 +10497,7 @@ and trans_template_parameter_list ((kind, body) : mt) : CST.template_parameter_l
               )
               v1
             ,
-            trans_tok_GT (Run.matcher_token v2)
+            trans_tok_prec_p1_gt (Run.matcher_token v2)
           )
       | _ -> assert false
       )

@@ -42,6 +42,9 @@ type lambda_default_capture = [
 type raw_string_literal = Token.t
 [@@deriving sexp_of]
 
+type imm_tok_lpar = Token.t (* "(" *)
+[@@deriving sexp_of]
+
 type virtual_specifier = [
     `Final of Token.t (* "final" *)
   | `Over of Token.t (* "override" *)
@@ -95,7 +98,7 @@ type pat_9d92f6a = Token.t (* pattern #[ 	]*ifndef *)
 type pat_25b90ba = Token.t (* pattern #[ 	]*ifdef *)
 [@@deriving sexp_of]
 
-type tok_GT = Token.t
+type tok_prec_p1_gt = Token.t
 [@@deriving sexp_of]
 
 type anon_choice_DOT_2ad1dab = [
@@ -152,7 +155,7 @@ type anon_choice_public_c9638d9 = [
 type pat_ca8830e = Token.t (* pattern #[ 	]*include *)
 [@@deriving sexp_of]
 
-type imm_tok_pat_c7f65b4 = Token.t (* pattern "[^\\\\\"\\n]+" *)
+type imm_tok_prec_p1_pat_c7f65b4 = Token.t (* pattern "[^\\\\\"\\n]+" *)
 [@@deriving sexp_of]
 
 type operator_name = Token.t
@@ -165,8 +168,8 @@ type anon_choice_AMP_c92c117 = [
 [@@deriving sexp_of]
 
 type anon_choice_pat_25b90ba_4a37f8c = [
-    `Pat_25b90ba of pat_25b90ba (*tok*)
-  | `Pat_9d92f6a of pat_9d92f6a (*tok*)
+    `Pat_25b90ba of pat_25b90ba
+  | `Pat_9d92f6a of pat_9d92f6a
 ]
 [@@deriving sexp_of]
 
@@ -180,7 +183,7 @@ type char_literal = (
     ]
   * [
         `Esc_seq of escape_sequence (*tok*)
-      | `Imm_tok_pat_36637e2 of imm_tok_pat_36637e2 (*tok*)
+      | `Imm_tok_pat_36637e2 of imm_tok_pat_36637e2
     ]
   * Token.t (* "'" *)
 )
@@ -210,7 +213,7 @@ type string_literal = (
       | `DQUOT of Token.t (* "\"" *)
     ]
   * [
-        `Imm_tok_pat_c7f65b4 of imm_tok_pat_c7f65b4 (*tok*)
+        `Imm_tok_prec_p1_pat_c7f65b4 of imm_tok_prec_p1_pat_c7f65b4
       | `Esc_seq of escape_sequence (*tok*)
     ]
       list (* zero or more *)
@@ -219,7 +222,7 @@ type string_literal = (
 [@@deriving sexp_of]
 
 type preproc_def = (
-    pat_c3ea183 (*tok*)
+    pat_c3ea183
   * identifier (*tok*)
   * preproc_arg (*tok*) option
   * Token.t (* "\n" *)
@@ -378,7 +381,7 @@ type variadic_reference_declarator = (
 [@@deriving sexp_of]
 
 type preproc_params = (
-    Token.t (* "(" *)
+    imm_tok_lpar
   * (
         anon_choice_stmt_id_d3c4b5f
       * (Token.t (* "," *) * anon_choice_stmt_id_d3c4b5f)
@@ -403,7 +406,7 @@ type concatenated_string = (
 [@@deriving sexp_of]
 
 type preproc_include = (
-    pat_ca8830e (*tok*)
+    pat_ca8830e
   * [
         `Str_lit of string_literal
       | `System_lib_str of system_lib_string (*tok*)
@@ -415,7 +418,7 @@ type preproc_include = (
 [@@deriving sexp_of]
 
 type preproc_function_def = (
-    pat_c3ea183 (*tok*)
+    pat_c3ea183
   * identifier (*tok*)
   * preproc_params
   * preproc_arg (*tok*) option
@@ -553,9 +556,9 @@ and anon_choice_param_decl_d9083af = [
 ]
 
 and anon_choice_prep_else_8b52b0f = [
-    `Prep_else of (pat_56631e5 (*tok*) * translation_unit)
+    `Prep_else of (pat_56631e5 * translation_unit)
   | `Prep_elif of (
-        pat_bfeb4bb (*tok*)
+        pat_bfeb4bb
       * preproc_expression
       * Token.t (* "\n" *)
       * translation_unit
@@ -565,11 +568,11 @@ and anon_choice_prep_else_8b52b0f = [
 
 and anon_choice_prep_else_in_field_decl_list_97ea65e = [
     `Prep_else_in_field_decl_list of (
-        pat_56631e5 (*tok*)
+        pat_56631e5
       * field_declaration_list_item list (* zero or more *)
     )
   | `Prep_elif_in_field_decl_list of (
-        pat_bfeb4bb (*tok*)
+        pat_bfeb4bb
       * preproc_expression
       * Token.t (* "\n" *)
       * field_declaration_list_item list (* zero or more *)
@@ -1271,21 +1274,21 @@ and pointer_field_declarator = (
 )
 
 and preproc_if = (
-    pat_3df6e71 (*tok*)
+    pat_3df6e71
   * preproc_expression
   * Token.t (* "\n" *)
   * translation_unit
   * anon_choice_prep_else_8b52b0f option
-  * pat_c46d1b2 (*tok*)
+  * pat_c46d1b2
 )
 
 and preproc_if_in_field_declaration_list = (
-    pat_3df6e71 (*tok*)
+    pat_3df6e71
   * preproc_expression
   * Token.t (* "\n" *)
   * field_declaration_list_item list (* zero or more *)
   * anon_choice_prep_else_in_field_decl_list_97ea65e option
-  * pat_c46d1b2 (*tok*)
+  * pat_c46d1b2
 )
 
 and preproc_ifdef = (
@@ -1293,7 +1296,7 @@ and preproc_ifdef = (
   * identifier (*tok*)
   * translation_unit
   * anon_choice_prep_else_8b52b0f option
-  * pat_c46d1b2 (*tok*)
+  * pat_c46d1b2
 )
 
 and preproc_ifdef_in_field_declaration_list = (
@@ -1301,7 +1304,7 @@ and preproc_ifdef_in_field_declaration_list = (
   * identifier (*tok*)
   * field_declaration_list_item list (* zero or more *)
   * anon_choice_prep_else_in_field_decl_list_97ea65e option
-  * pat_c46d1b2 (*tok*)
+  * pat_c46d1b2
 )
 
 and return_statement = [
@@ -1404,7 +1407,7 @@ and template_argument_list = (
           list (* zero or more *)
     )
       option
-  * tok_GT (*tok*)
+  * tok_prec_p1_gt
 )
 
 and template_declaration = (
@@ -1437,7 +1440,7 @@ and template_parameter_list = (
           list (* zero or more *)
     )
       option
-  * tok_GT (*tok*)
+  * tok_prec_p1_gt
 )
 
 and template_type = (
@@ -1627,9 +1630,6 @@ type null (* inlined *) = Token.t (* "NULL" *)
 [@@deriving sexp_of]
 
 type comment (* inlined *) = Token.t
-[@@deriving sexp_of]
-
-type imm_tok_LPAR (* inlined *) = Token.t (* "(" *)
 [@@deriving sexp_of]
 
 type ms_unsigned_ptr_modifier (* inlined *) = Token.t (* "__uptr" *)
@@ -1888,7 +1888,7 @@ type pointer_type_declarator (* inlined *) = (
 [@@deriving sexp_of]
 
 type preproc_elif (* inlined *) = (
-    pat_bfeb4bb (*tok*)
+    pat_bfeb4bb
   * preproc_expression
   * Token.t (* "\n" *)
   * translation_unit
@@ -1897,7 +1897,7 @@ type preproc_elif (* inlined *) = (
 [@@deriving sexp_of]
 
 type preproc_elif_in_field_declaration_list (* inlined *) = (
-    pat_bfeb4bb (*tok*)
+    pat_bfeb4bb
   * preproc_expression
   * Token.t (* "\n" *)
   * field_declaration_list_item list (* zero or more *)
@@ -1905,11 +1905,11 @@ type preproc_elif_in_field_declaration_list (* inlined *) = (
 )
 [@@deriving sexp_of]
 
-type preproc_else (* inlined *) = (pat_56631e5 (*tok*) * translation_unit)
+type preproc_else (* inlined *) = (pat_56631e5 * translation_unit)
 [@@deriving sexp_of]
 
 type preproc_else_in_field_declaration_list (* inlined *) = (
-    pat_56631e5 (*tok*)
+    pat_56631e5
   * field_declaration_list_item list (* zero or more *)
 )
 [@@deriving sexp_of]
