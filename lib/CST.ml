@@ -8,16 +8,6 @@
 open! Sexplib.Conv
 open Tree_sitter_run
 
-type ms_call_modifier = [
-    `X___cdecl of Token.t (* "__cdecl" *)
-  | `X___clrc of Token.t (* "__clrcall" *)
-  | `X___stdc of Token.t (* "__stdcall" *)
-  | `X___fast of Token.t (* "__fastcall" *)
-  | `X___this of Token.t (* "__thiscall" *)
-  | `X___vect of Token.t (* "__vectorcall" *)
-]
-[@@deriving sexp_of]
-
 type pat_c46d1b2 = Token.t (* pattern #[ 	]*endif *)
 [@@deriving sexp_of]
 
@@ -42,13 +32,61 @@ type lambda_default_capture = [
 type raw_string_literal = Token.t
 [@@deriving sexp_of]
 
-type imm_tok_lpar = Token.t (* "(" *)
-[@@deriving sexp_of]
-
 type virtual_specifier = [
     `Final of Token.t (* "final" *)
   | `Over of Token.t (* "override" *)
 ]
+[@@deriving sexp_of]
+
+type pat_3df6e71 = Token.t (* pattern #[ 	]*if *)
+[@@deriving sexp_of]
+
+type virtual_function_specifier = [ `Virt of Token.t (* "virtual" *) ]
+[@@deriving sexp_of]
+
+type tok_prec_p1_gt = Token.t
+[@@deriving sexp_of]
+
+type anon_choice_BANG_67174d6 = [
+    `BANG of Token.t (* "!" *)
+  | `TILDE of Token.t (* "~" *)
+  | `DASH of Token.t (* "-" *)
+  | `PLUS of Token.t (* "+" *)
+]
+[@@deriving sexp_of]
+
+type escape_sequence = Token.t
+[@@deriving sexp_of]
+
+type preproc_directive = Token.t (* pattern #[ \t]*[a-zA-Z]\w* *)
+[@@deriving sexp_of]
+
+type system_lib_string = Token.t
+[@@deriving sexp_of]
+
+type identifier = Token.t (* pattern [a-zA-Z_]\w* *)
+[@@deriving sexp_of]
+
+type anon_choice_type_a2fe5d4 = [
+    `Type of Token.t (* "typename" *)
+  | `Class of Token.t (* "class" *)
+]
+[@@deriving sexp_of]
+
+type pat_ca8830e = Token.t (* pattern #[ 	]*include *)
+[@@deriving sexp_of]
+
+type ms_call_modifier = [
+    `X___cdecl of Token.t (* "__cdecl" *)
+  | `X___clrc of Token.t (* "__clrcall" *)
+  | `X___stdc of Token.t (* "__stdcall" *)
+  | `X___fast of Token.t (* "__fastcall" *)
+  | `X___this of Token.t (* "__thiscall" *)
+  | `X___vect of Token.t (* "__vectorcall" *)
+]
+[@@deriving sexp_of]
+
+type imm_tok_lpar = Token.t (* "(" *)
 [@@deriving sexp_of]
 
 type primitive_type = Token.t
@@ -75,12 +113,6 @@ type true_ = Token.t
 type false_ = Token.t
 [@@deriving sexp_of]
 
-type pat_3df6e71 = Token.t (* pattern #[ 	]*if *)
-[@@deriving sexp_of]
-
-type virtual_function_specifier = [ `Virt of Token.t (* "virtual" *) ]
-[@@deriving sexp_of]
-
 type imm_tok_pat_36637e2 = Token.t (* pattern "[^\\n']" *)
 [@@deriving sexp_of]
 
@@ -98,24 +130,10 @@ type pat_9d92f6a = Token.t (* pattern #[ 	]*ifndef *)
 type pat_25b90ba = Token.t (* pattern #[ 	]*ifdef *)
 [@@deriving sexp_of]
 
-type tok_prec_p1_gt = Token.t
-[@@deriving sexp_of]
-
 type anon_choice_DOT_2ad1dab = [
     `DOT of Token.t (* "." *)
   | `DASHGT of Token.t (* "->" *)
 ]
-[@@deriving sexp_of]
-
-type anon_choice_BANG_67174d6 = [
-    `BANG of Token.t (* "!" *)
-  | `TILDE of Token.t (* "~" *)
-  | `DASH of Token.t (* "-" *)
-  | `PLUS of Token.t (* "+" *)
-]
-[@@deriving sexp_of]
-
-type escape_sequence = Token.t
 [@@deriving sexp_of]
 
 type ms_unaligned_ptr_modifier = [
@@ -124,22 +142,7 @@ type ms_unaligned_ptr_modifier = [
 ]
 [@@deriving sexp_of]
 
-type preproc_directive = Token.t (* pattern #[ \t]*[a-zA-Z]\w* *)
-[@@deriving sexp_of]
-
-type system_lib_string = Token.t
-[@@deriving sexp_of]
-
-type identifier = Token.t (* pattern [a-zA-Z_]\w* *)
-[@@deriving sexp_of]
-
 type number_literal = Token.t
-[@@deriving sexp_of]
-
-type anon_choice_type_a2fe5d4 = [
-    `Type of Token.t (* "typename" *)
-  | `Class of Token.t (* "class" *)
-]
 [@@deriving sexp_of]
 
 type pat_56631e5 = Token.t (* pattern #[ 	]*else *)
@@ -150,9 +153,6 @@ type anon_choice_public_c9638d9 = [
   | `Priv of Token.t (* "private" *)
   | `Prot of Token.t (* "protected" *)
 ]
-[@@deriving sexp_of]
-
-type pat_ca8830e = Token.t (* pattern #[ 	]*include *)
 [@@deriving sexp_of]
 
 type imm_tok_prec_p1_pat_c7f65b4 = Token.t (* pattern "[^\\\\\"\\n]+" *)
@@ -167,10 +167,11 @@ type anon_choice_AMP_c92c117 = [
 ]
 [@@deriving sexp_of]
 
-type anon_choice_pat_25b90ba_4a37f8c = [
-    `Pat_25b90ba of pat_25b90ba
-  | `Pat_9d92f6a of pat_9d92f6a
-]
+type preproc_call = (
+    preproc_directive (*tok*)
+  * preproc_arg (*tok*) option
+  * Token.t (* "\n" *)
+)
 [@@deriving sexp_of]
 
 type char_literal = (
@@ -189,11 +190,10 @@ type char_literal = (
 )
 [@@deriving sexp_of]
 
-type preproc_call = (
-    preproc_directive (*tok*)
-  * preproc_arg (*tok*) option
-  * Token.t (* "\n" *)
-)
+type anon_choice_pat_25b90ba_4a37f8c = [
+    `Pat_25b90ba of pat_25b90ba
+  | `Pat_9d92f6a of pat_9d92f6a
+]
 [@@deriving sexp_of]
 
 type ms_pointer_modifier = [
@@ -221,14 +221,6 @@ type string_literal = (
 )
 [@@deriving sexp_of]
 
-type preproc_def = (
-    pat_c3ea183
-  * identifier (*tok*)
-  * preproc_arg (*tok*) option
-  * Token.t (* "\n" *)
-)
-[@@deriving sexp_of]
-
 type preproc_defined = [
     `Defi_LPAR_id_RPAR of (
         Token.t (* "defined" *) * Token.t (* "(" *) * identifier (*tok*)
@@ -236,9 +228,6 @@ type preproc_defined = [
     )
   | `Defi_id of (Token.t (* "defined" *) * identifier (*tok*))
 ]
-[@@deriving sexp_of]
-
-type variadic_declarator = (Token.t (* "..." *) * identifier (*tok*) option)
 [@@deriving sexp_of]
 
 type field_designator = (Token.t (* "." *) * identifier (*tok*))
@@ -249,6 +238,30 @@ type variadic_type_parameter_declaration = (
   * Token.t (* "..." *)
   * identifier (*tok*) option
 )
+[@@deriving sexp_of]
+
+type sized_type_specifier = (
+    [
+        `Signed of Token.t (* "signed" *)
+      | `Unsi of Token.t (* "unsigned" *)
+      | `Long of Token.t (* "long" *)
+      | `Short of Token.t (* "short" *)
+    ]
+      list (* one or more *)
+  * [ `Id of identifier (*tok*) | `Prim_type of primitive_type (*tok*) ]
+      option
+)
+[@@deriving sexp_of]
+
+type preproc_def = (
+    pat_c3ea183
+  * identifier (*tok*)
+  * preproc_arg (*tok*) option
+  * Token.t (* "\n" *)
+)
+[@@deriving sexp_of]
+
+type variadic_declarator = (Token.t (* "..." *) * identifier (*tok*) option)
 [@@deriving sexp_of]
 
 type type_parameter_declaration = (
@@ -263,23 +276,10 @@ type ms_declspec_modifier = (
 )
 [@@deriving sexp_of]
 
-type anon_choice_stmt_id_d3c4b5f = [
+type anon_choice_type_id_d3c4b5f = [
     `Id of identifier (*tok*)
   | `DOTDOTDOT of Token.t (* "..." *)
 ]
-[@@deriving sexp_of]
-
-type sized_type_specifier = (
-    [
-        `Signed of Token.t (* "signed" *)
-      | `Unsi of Token.t (* "unsigned" *)
-      | `Long of Token.t (* "long" *)
-      | `Short of Token.t (* "short" *)
-    ]
-      list (* one or more *)
-  * [ `Id of identifier (*tok*) | `Prim_type of primitive_type (*tok*) ]
-      option
-)
 [@@deriving sexp_of]
 
 type destructor_name = (Token.t (* "~" *) * identifier (*tok*))
@@ -383,8 +383,8 @@ type variadic_reference_declarator = (
 type preproc_params = (
     imm_tok_lpar (*tok*)
   * (
-        anon_choice_stmt_id_d3c4b5f
-      * (Token.t (* "," *) * anon_choice_stmt_id_d3c4b5f)
+        anon_choice_type_id_d3c4b5f
+      * (Token.t (* "," *) * anon_choice_type_id_d3c4b5f)
           list (* zero or more *)
     )
       option
@@ -392,7 +392,7 @@ type preproc_params = (
 )
 [@@deriving sexp_of]
 
-type anon_choice_stmt_id_efddc5b = [
+type anon_choice_type_id_efddc5b = [
     `Id of identifier (*tok*)
   | `Op_name of operator_name (*tok*)
   | `Dest_name of destructor_name
@@ -580,26 +580,6 @@ and anon_choice_prep_else_in_field_decl_list_97ea65e = [
     )
 ]
 
-and anon_choice_stmt_id_ae28a26 = [
-    `Id of identifier (*tok*)
-  | `Scoped_field_id of (
-        anon_choice_stmt_id_ec78ce4 option
-      * Token.t (* "::" *)
-      * anon_choice_stmt_id_efddc5b
-    )
-]
-
-and anon_choice_stmt_id_ec78ce4 = [
-    `Id of identifier (*tok*)
-  | `Temp_type of template_type
-  | `Scoped_name_id of scoped_namespace_identifier
-]
-
-and anon_choice_stmt_id_f1f5a37 = [
-    `Id of identifier (*tok*)
-  | `Scoped_id of scoped_identifier
-]
-
 and anon_choice_stor_class_spec_5764fed = [
     `Stor_class_spec of storage_class_specifier
   | `Type_qual of type_qualifier
@@ -611,6 +591,26 @@ and anon_choice_type_desc_4d9cafa = [
     `Type_desc of type_descriptor
   | `Type_param_pack_expa of (type_descriptor * Token.t (* "..." *))
   | `Exp of expression
+]
+
+and anon_choice_type_id_ae28a26 = [
+    `Id of identifier (*tok*)
+  | `Scoped_field_id of (
+        anon_choice_type_id_ec78ce4 option
+      * Token.t (* "::" *)
+      * anon_choice_type_id_efddc5b
+    )
+]
+
+and anon_choice_type_id_ec78ce4 = [
+    `Id of identifier (*tok*)
+  | `Temp_type of template_type
+  | `Scoped_name_id of scoped_namespace_identifier
+]
+
+and anon_choice_type_id_f1f5a37 = [
+    `Id of identifier (*tok*)
+  | `Scoped_id of scoped_identifier
 ]
 
 and anon_choice_type_qual_01506e0 = [
@@ -1050,7 +1050,7 @@ and field_expression = [
 ]
 
 and field_initializer = (
-    anon_choice_stmt_id_ae28a26
+    anon_choice_type_id_ae28a26
   * [ `Init_list of initializer_list | `Arg_list of argument_list ]
   * Token.t (* "..." *) option
 )
@@ -1190,7 +1190,7 @@ and non_case_statement = [
 ]
 
 and operator_cast = (
-    (anon_choice_stmt_id_ec78ce4 option * Token.t (* "::" *)) option
+    (anon_choice_type_id_ec78ce4 option * Token.t (* "::" *)) option
   * Token.t (* "operator" *)
   * declaration_specifiers
   * abstract_declarator
@@ -1319,19 +1319,19 @@ and return_statement = [
 ]
 
 and scoped_identifier = (
-    anon_choice_stmt_id_ec78ce4 option
+    anon_choice_type_id_ec78ce4 option
   * Token.t (* "::" *)
-  * anon_choice_stmt_id_efddc5b
+  * anon_choice_type_id_efddc5b
 )
 
 and scoped_namespace_identifier = (
-    anon_choice_stmt_id_ec78ce4 option
+    anon_choice_type_id_ec78ce4 option
   * Token.t (* "::" *)
   * identifier (*tok*)
 )
 
 and scoped_type_identifier = (
-    anon_choice_stmt_id_ec78ce4 option
+    anon_choice_type_id_ec78ce4 option
   * Token.t (* "::" *)
   * identifier (*tok*)
 )
@@ -1427,10 +1427,10 @@ and template_declaration = (
 )
 
 and template_function = (
-    anon_choice_stmt_id_f1f5a37 * template_argument_list
+    anon_choice_type_id_f1f5a37 * template_argument_list
 )
 
-and template_method = (anon_choice_stmt_id_ae28a26 * template_argument_list)
+and template_method = (anon_choice_type_id_ae28a26 * template_argument_list)
 
 and template_parameter_list = (
     Token.t (* "<" *)
@@ -1598,7 +1598,7 @@ and update_expression = [
 and using_declaration = (
     Token.t (* "using" *)
   * Token.t (* "namespace" *) option
-  * anon_choice_stmt_id_f1f5a37
+  * anon_choice_type_id_f1f5a37
   * Token.t (* ";" *)
 )
 
@@ -1616,6 +1616,23 @@ type default_method_clause (* inlined *) = (
 )
 [@@deriving sexp_of]
 
+type comment (* inlined *) = Token.t
+[@@deriving sexp_of]
+
+type auto (* inlined *) = Token.t (* "auto" *)
+[@@deriving sexp_of]
+
+type this (* inlined *) = Token.t (* "this" *)
+[@@deriving sexp_of]
+
+type ms_signed_ptr_modifier (* inlined *) = Token.t (* "__sptr" *)
+[@@deriving sexp_of]
+
+type break_statement (* inlined *) = (
+    Token.t (* "break" *) * Token.t (* ";" *)
+)
+[@@deriving sexp_of]
+
 type delete_method_clause (* inlined *) = (
     Token.t (* "=" *) * Token.t (* "delete" *) * Token.t (* ";" *)
 )
@@ -1629,27 +1646,10 @@ type continue_statement (* inlined *) = (
 type null (* inlined *) = Token.t (* "NULL" *)
 [@@deriving sexp_of]
 
-type comment (* inlined *) = Token.t
-[@@deriving sexp_of]
-
 type ms_unsigned_ptr_modifier (* inlined *) = Token.t (* "__uptr" *)
 [@@deriving sexp_of]
 
-type auto (* inlined *) = Token.t (* "auto" *)
-[@@deriving sexp_of]
-
-type this (* inlined *) = Token.t (* "this" *)
-[@@deriving sexp_of]
-
-type ms_signed_ptr_modifier (* inlined *) = Token.t (* "__sptr" *)
-[@@deriving sexp_of]
-
 type nullptr (* inlined *) = Token.t (* "nullptr" *)
-[@@deriving sexp_of]
-
-type break_statement (* inlined *) = (
-    Token.t (* "break" *) * Token.t (* ";" *)
-)
 [@@deriving sexp_of]
 
 type ms_restrict_modifier (* inlined *) = Token.t (* "__restrict" *)
@@ -1925,9 +1925,9 @@ type reference_field_declarator (* inlined *) = (
 [@@deriving sexp_of]
 
 type scoped_field_identifier (* inlined *) = (
-    anon_choice_stmt_id_ec78ce4 option
+    anon_choice_type_id_ec78ce4 option
   * Token.t (* "::" *)
-  * anon_choice_stmt_id_efddc5b
+  * anon_choice_type_id_efddc5b
 )
 [@@deriving sexp_of]
 
