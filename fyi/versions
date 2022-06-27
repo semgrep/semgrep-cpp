@@ -1,3 +1,32 @@
+File: semgrep-grammars/src/tree-sitter-c/LICENSE
+Git repo name: tree-sitter-c
+Latest commit in repo: 8d4631b673f8a9d968d1d93393c0a965194abac0
+Last change in file:
+  commit af2904ca831cbb33cdc3bb7bacc2ed9840bd0a3c
+  Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
+  Date:   Fri Sep 5 23:53:51 2014 -0700
+  
+      Initial commit
+---
+File: semgrep-grammars/src/tree-sitter-c/grammar.js
+Git repo name: tree-sitter-c
+Latest commit in repo: 8d4631b673f8a9d968d1d93393c0a965194abac0
+Last change in file:
+  commit 88592f162e218e3d0de28f1e5d1835e6ef2c57b6
+  Author: Mathieu Nayrolles <MathieuNls@users.noreply.github.com>
+  Date:   Mon Mar 30 13:03:36 2020 -0400
+  
+      Add support for Microsoft-specific modifiers (#40)
+      
+      * Add support for Microsoft-specific modifiers
+      
+      Microsoft-specific modifiers are keywords can be used to modify declarators to form derived types.
+      
+      The specification for the modifiers themselves is here:
+      https://docs.microsoft.com/en-us/cpp/cpp/microsoft-specific-modifiers?view=vs-2019
+      
+      * 0.16.1
+---
 File: semgrep-grammars/src/tree-sitter-cpp/LICENSE
 Git repo name: tree-sitter-cpp
 Latest commit in repo: a35a275df92e7583df38f2de2562361f2b69987e
@@ -34,7 +63,7 @@ Last change in file:
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
 Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: f3ce103f463f4f6115c80a52a7eb435b93e9b185
+Latest commit in repo: 84f246606a5ed29af4c2beb77c183ad6c696cc2b
 Last change in file:
   commit 405c8e6cdcf5a2f8289b7676438a4fb96ef1d05e
   Author: Martin Jambon <martin@returntocorp.com>
