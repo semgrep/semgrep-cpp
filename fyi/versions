@@ -63,11 +63,17 @@ Last change in file:
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
 Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: 84f246606a5ed29af4c2beb77c183ad6c696cc2b
+Latest commit in repo: 3a7e08725596b5f88356c2fed99f35892d7e10a8
 Last change in file:
-  commit 405c8e6cdcf5a2f8289b7676438a4fb96ef1d05e
-  Author: Martin Jambon <martin@returntocorp.com>
-  Date:   Wed Feb 17 18:59:42 2021 -0800
+  commit 3a7e08725596b5f88356c2fed99f35892d7e10a8
+  Author: pad <pad@r2c.dev>
+  Date:   Mon Sep 19 13:31:04 2022 +0200
   
-      Migrate cpp to modern setup
+      C++: start support semgrep patterns (metavar and simple ellipsis)
+      
+      This will help https://github.com/returntocorp/semgrep/issues/1923
+      
+      test plan:
+      test file included
+      ./test-lang cpp
 ---
