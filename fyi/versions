@@ -1,6 +1,6 @@
 File: semgrep-grammars/src/tree-sitter-c/LICENSE
 Git repo name: tree-sitter-c
-Latest commit in repo: a2b7bac3b313efbaa683d9a276ff63cdc544d960
+Latest commit in repo: 7175a6dd5fc1cee660dce6fe23f6043d75af424a
 Last change in file:
   commit af2904ca831cbb33cdc3bb7bacc2ed9840bd0a3c
   Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
@@ -10,17 +10,17 @@ Last change in file:
 ---
 File: semgrep-grammars/src/tree-sitter-c/grammar.js
 Git repo name: tree-sitter-c
-Latest commit in repo: a2b7bac3b313efbaa683d9a276ff63cdc544d960
+Latest commit in repo: 7175a6dd5fc1cee660dce6fe23f6043d75af424a
 Last change in file:
-  commit e0c2274b48ee95d32838634fd41691e2360453f0
-  Author: Amaan Qureshi <amaanq12@gmail.com>
-  Date:   Sat Aug 12 21:31:03 2023 -0400
+  commit 94bc261b1ada441b04071e857512deea4d09357c
+  Author: Ismail A Bella <60820321+abellaismail7@users.noreply.github.com>
+  Date:   Sun Jul 10 05:45:49 2022 +0000
   
-      fix: add old_style functions to block_item
+      fix: allow multiple expressions inside for_statement condition
 ---
 File: semgrep-grammars/src/tree-sitter-cpp/LICENSE
 Git repo name: tree-sitter-cpp
-Latest commit in repo: a90f170f92d5d70e7c2d4183c146e61ba5f3a457
+Latest commit in repo: f40125503642845492d87fa56ece3ed26a4ef4db
 Last change in file:
   commit d8966822015417d060ffaafd95a71a49dd28ec99
   Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
@@ -30,19 +30,22 @@ Last change in file:
 ---
 File: semgrep-grammars/src/tree-sitter-cpp/grammar.js
 Git repo name: tree-sitter-cpp
-Latest commit in repo: a90f170f92d5d70e7c2d4183c146e61ba5f3a457
+Latest commit in repo: f40125503642845492d87fa56ece3ed26a4ef4db
 Last change in file:
-  commit a90f170f92d5d70e7c2d4183c146e61ba5f3a457
-  Author: Ben Deane <ben@elbeno.com>
-  Date:   Wed Aug 16 00:46:22 2023 -0600
+  commit 818a564afc1571fc3996ddbe7227af778f7a112c
+  Author: John Drouhard <john@drouhard.dev>
+  Date:   Sat Jul 23 15:52:24 2022 -0500
   
-      refactor: rewrite `number_literal`
+      Add support for init-statements in range-for loops
       
-      Addresses #224 and properly parses all C++ numbers.
+      - Adds a named "init_statement" node for all applicable locations (if,
+        switch, while, and range-for)
+      - Adds alias declarations and typedef declarations to possible types of
+        init statements (c++20/c++23)
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
 Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: f62ecfcaf2e53351f15430609b63438d4bdcfd98
+Latest commit in repo: 5bfa2240fdf489573e4fe4bb647e926dc73ee921
 Last change in file:
   commit 44edf7e284a7396536a99e054918314183447c3f
   Author: brandonspark <wu.brandonj@gmail.com>
