@@ -42,11 +42,11 @@ Last change in file:
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
 Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: bea46680d270567305bdde11c2844ca73d68c690
+Latest commit in repo: ab3349b5c5e2a82790fdd73cbfb8f655cd5cce09
 Last change in file:
-  commit 44edf7e284a7396536a99e054918314183447c3f
+  commit f09a71de325f2fd7febb74b83f89cfc00690e39b
   Author: brandonspark <wu.brandonj@gmail.com>
-  Date:   Thu Sep 7 13:20:17 2023 -0700
+  Date:   Wed Sep 20 12:50:42 2023 -0700
   
-      update c and cpp
+      augment cpp with semgrep constructs
 ---
