@@ -1,6 +1,6 @@
 File: semgrep-grammars/src/tree-sitter-c/LICENSE
 Git repo name: tree-sitter-c
-Latest commit in repo: a2b7bac3b313efbaa683d9a276ff63cdc544d960
+Latest commit in repo: f1075f2d65ecb62725821fd8a34ce68c1fa8ae51
 Last change in file:
   commit af2904ca831cbb33cdc3bb7bacc2ed9840bd0a3c
   Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
@@ -10,13 +10,13 @@ Last change in file:
 ---
 File: semgrep-grammars/src/tree-sitter-c/grammar.js
 Git repo name: tree-sitter-c
-Latest commit in repo: a2b7bac3b313efbaa683d9a276ff63cdc544d960
+Latest commit in repo: f1075f2d65ecb62725821fd8a34ce68c1fa8ae51
 Last change in file:
-  commit e0c2274b48ee95d32838634fd41691e2360453f0
-  Author: Amaan Qureshi <amaanq12@gmail.com>
-  Date:   Sat Aug 12 21:31:03 2023 -0400
+  commit f1075f2d65ecb62725821fd8a34ce68c1fa8ae51
+  Author: Phil Turnbull <philip.turnbull@gmail.com>
+  Date:   Wed Oct 4 18:08:40 2023 -0400
   
-      fix: add old_style functions to block_item
+      fix: `sizeof` precedence is incorrect
 ---
 File: semgrep-grammars/src/tree-sitter-cpp/LICENSE
 Git repo name: tree-sitter-cpp
@@ -42,7 +42,7 @@ Last change in file:
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
 Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: ab3349b5c5e2a82790fdd73cbfb8f655cd5cce09
+Latest commit in repo: 5218c675f7c7b1016f265701aac3a5fa8f56f8a7
 Last change in file:
   commit f09a71de325f2fd7febb74b83f89cfc00690e39b
   Author: brandonspark <wu.brandonj@gmail.com>
