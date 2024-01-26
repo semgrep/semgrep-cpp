@@ -20,7 +20,7 @@ Last change in file:
 ---
 File: semgrep-grammars/src/tree-sitter-cpp/LICENSE
 Git repo name: tree-sitter-cpp
-Latest commit in repo: a90f170f92d5d70e7c2d4183c146e61ba5f3a457
+Latest commit in repo: 4ca37be8e70e5a40ae95688bec56b886ba945888
 Last change in file:
   commit d8966822015417d060ffaafd95a71a49dd28ec99
   Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
@@ -30,23 +30,21 @@ Last change in file:
 ---
 File: semgrep-grammars/src/tree-sitter-cpp/grammar.js
 Git repo name: tree-sitter-cpp
-Latest commit in repo: a90f170f92d5d70e7c2d4183c146e61ba5f3a457
+Latest commit in repo: 4ca37be8e70e5a40ae95688bec56b886ba945888
 Last change in file:
-  commit a90f170f92d5d70e7c2d4183c146e61ba5f3a457
-  Author: Ben Deane <ben@elbeno.com>
-  Date:   Wed Aug 16 00:46:22 2023 -0600
+  commit 4ca37be8e70e5a40ae95688bec56b886ba945888
+  Author: Brandon Wu <49291449+brandonspark@users.noreply.github.com>
+  Date:   Fri Jan 26 08:33:26 2024 -0800
   
-      refactor: rewrite `number_literal`
-      
-      Addresses #224 and properly parses all C++ numbers.
+      disambiguate fold vs parenthesized assignment (#239)
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
 Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: 5218c675f7c7b1016f265701aac3a5fa8f56f8a7
+Latest commit in repo: 277f896e21e85b5e03165b968520f627a4368392
 Last change in file:
-  commit f09a71de325f2fd7febb74b83f89cfc00690e39b
+  commit 277f896e21e85b5e03165b968520f627a4368392
   Author: brandonspark <wu.brandonj@gmail.com>
-  Date:   Wed Sep 20 12:50:42 2023 -0700
+  Date:   Fri Jan 26 08:41:19 2024 -0800
   
-      augment cpp with semgrep constructs
+      update cpp
 ---

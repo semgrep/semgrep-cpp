@@ -33,6 +33,23 @@ const FOLD_OPERATORS = [
   'or', 'and', 'bitor', 'xor', 'bitand', 'not_eq',
 ];
 
+const ASSIGNMENT_OPERATORS = [
+  '=',
+  '*=',
+  '/=',
+  '%=',
+  '+=',
+  '-=',
+  '<<=',
+  '>>=',
+  '&=',
+  '^=',
+  '|=',
+  'and_eq',
+  'or_eq',
+  'xor_eq',
+]
+
 module.exports = grammar(C, {
   name: 'cpp',
 
@@ -65,6 +82,8 @@ module.exports = grammar(C, {
     [$._declaration_specifiers, $._constructor_specifiers],
     [$._binary_fold_operator, $._fold_operator],
     [$._function_declarator_seq],
+    [$._type_specifier, $.sized_type_specifier],
+    [$.initializer_pair, $.comma_expression],
   ],
 
   inline: ($, original) => original.concat([
@@ -268,6 +287,7 @@ module.exports = grammar(C, {
       field('base', choice(
         alias($.qualified_type_identifier, $.qualified_identifier),
         $._type_identifier,
+        $.primitive_type,
         $.sized_type_specifier,
       )),
     )),
@@ -366,7 +386,7 @@ module.exports = grammar(C, {
 
     optional_parameter_declaration: $ => seq(
       $._declaration_specifiers,
-      field('declarator', optional($._declarator)),
+      field('declarator', optional(choice($._declarator, $.abstract_reference_declarator))),
       '=',
       field('default_value', $._expression),
     ),
@@ -1222,25 +1242,22 @@ module.exports = grammar(C, {
 
     assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
       field('left', $._assignment_left_expression),
-      field('operator', choice(
-        '=',
-        '*=',
-        '/=',
-        '%=',
-        '+=',
-        '-=',
-        '<<=',
-        '>>=',
-        '&=',
-        '^=',
-        '|=',
-        'and_eq',
-        'or_eq',
-        'xor_eq',
-      )),
+      field('operator', choice(...ASSIGNMENT_OPERATORS)),
       field('right', choice($._expression, $.initializer_list)),
     )),
 
+    assignment_expression_lhs_expression: $ => seq(
+      field('left', $._expression),
+      field('operator', choice(...ASSIGNMENT_OPERATORS)),
+      field('right', choice($._expression, $.initializer_list)),
+    ),
+
+    // This prevents an ambiguity between fold expressions
+    // and assignment expressions within parentheses.
+    parenthesized_expression: ($, original) => choice(
+      original,
+      seq('(', alias($.assignment_expression_lhs_expression, $.assignment_expression), ')')
+    ),
 
     operator_name: $ => prec(1, seq(
       'operator',
@@ -1269,11 +1286,11 @@ module.exports = grammar(C, {
 
     this: _ => 'this',
 
-    concatenated_string: $ => seq(
+    concatenated_string: $ => prec.right(seq(
       choice($.identifier, $.string_literal, $.raw_string_literal),
       choice($.string_literal, $.raw_string_literal),
       repeat(choice($.identifier, $.string_literal, $.raw_string_literal)),
-    ),
+    )),
 
     number_literal: $ => {
       const sign = /[-\+]/;

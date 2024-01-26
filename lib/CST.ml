@@ -8,170 +8,34 @@
 open! Sexplib.Conv
 open Tree_sitter_run
 
-type false_ = Token.t
-
-type ms_unaligned_ptr_modifier = [
-    `X__unal of Token.t (* "_unaligned" *)
-  | `X___unal of Token.t (* "__unaligned" *)
+type anon_choice_EQ_6389fc4 = [
+    `EQ of Token.t (* "=" *)
+  | `STAREQ of Token.t (* "*=" *)
+  | `SLASHEQ of Token.t (* "/=" *)
+  | `PERCEQ of Token.t (* "%=" *)
+  | `PLUSEQ of Token.t (* "+=" *)
+  | `DASHEQ of Token.t (* "-=" *)
+  | `LTLTEQ of Token.t (* "<<=" *)
+  | `GTGTEQ of Token.t (* ">>=" *)
+  | `AMPEQ of Token.t (* "&=" *)
+  | `HATEQ of Token.t (* "^=" *)
+  | `BAREQ of Token.t (* "|=" *)
+  | `And_eq of Token.t (* "and_eq" *)
+  | `Or_eq of Token.t (* "or_eq" *)
+  | `Xor_eq of Token.t (* "xor_eq" *)
 ]
 
-type pat_25b90ba = Token.t (* pattern #[ 	]*ifdef *)
-
-type true_ = Token.t
-
-type virtual_ = [ `Virt of Token.t (* "virtual" *) ]
-
-type break_statement = (Token.t (* "break" *) * Token.t (* ";" *))
-
-type raw_string_content = Token.t
-
-type semgrep_named_ellipsis = Token.t (* pattern \$\.\.\.[A-Z_][A-Z_0-9]* *)
-
-type number_literal = Token.t
+type tok_prec_p1_gt = Token.t
 
 type anon_choice_type_a2fe5d4 = [
     `Type of Token.t (* "typename" *)
   | `Class of Token.t (* "class" *)
 ]
 
-type pat_c46d1b2 = Token.t (* pattern #[ 	]*endif *)
-
-type access_specifier = [
-    `Public of Token.t (* "public" *)
-  | `Priv of Token.t (* "private" *)
-  | `Prot of Token.t (* "protected" *)
-]
-
-type primitive_type = Token.t
-
-type pat_ca8830e = Token.t (* pattern #[ 	]*include *)
-
-type anon_choice_DASHDASH_d11def2 = [
-    `DASHDASH of Token.t (* "--" *)
-  | `PLUSPLUS of Token.t (* "++" *)
-]
-
-type escape_sequence = Token.t
-
-type default_method_clause = (
-    Token.t (* "=" *) * Token.t (* "default" *) * Token.t (* ";" *)
-)
-
-type identifier =
-  Token.t (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *)
-
-type preproc_directive = Token.t (* pattern #[ \t]*[a-zA-Z0-9]\w* *)
-
-type pat_c3ea183 = Token.t (* pattern #[ 	]*define *)
-
 type ref_qualifier = [
     `AMP of Token.t (* "&" *)
   | `AMPAMP of Token.t (* "&&" *)
 ]
-
-type type_qualifier = [
-    `Choice_const of [
-        `Const of Token.t (* "const" *)
-      | `Cons of Token.t (* "constexpr" *)
-      | `Vola of Token.t (* "volatile" *)
-      | `Rest of Token.t (* "restrict" *)
-      | `X___rest__ of Token.t (* "__restrict__" *)
-      | `X___exte__ of Token.t (* "__extension__" *)
-      | `X__Atomic of Token.t (* "_Atomic" *)
-      | `X__Nore of Token.t (* "_Noreturn" *)
-      | `Nore of Token.t (* "noreturn" *)
-    ]
-  | `Muta of Token.t (* "mutable" *)
-  | `Cons_36fe86c of Token.t (* "constinit" *)
-  | `Cons_a25342f of Token.t (* "consteval" *)
-]
-
-type anon_choice_signed_a0bfc19 = [
-    `Signed of Token.t (* "signed" *)
-  | `Unsi of Token.t (* "unsigned" *)
-  | `Long of Token.t (* "long" *)
-  | `Short of Token.t (* "short" *)
-]
-
-type pat_3df6e71 = Token.t (* pattern #[ 	]*if *)
-
-type continue_statement = (Token.t (* "continue" *) * Token.t (* ";" *))
-
-type imm_tok_prec_p1_pat_c7f65b4 = Token.t (* pattern "[^\\\\\"\\n]+" *)
-
-type pat_bfeb4bb = Token.t (* pattern #[ 	]*elif *)
-
-type null = [
-    `NULL of Token.t (* "NULL" *)
-  | `Null of Token.t (* "nullptr" *)
-]
-
-type imm_tok_pat_36637e2 = Token.t (* pattern "[^\\n']" *)
-
-type pat_0307ca2 = Token.t (* pattern #[ 	]*elifdef *)
-
-type gnu_asm_qualifier = [
-    `Vola of Token.t (* "volatile" *)
-  | `Inline of Token.t (* "inline" *)
-  | `Goto of Token.t (* "goto" *)
-]
-
-type virtual_specifier = [
-    `Final of Token.t (* "final" *)
-  | `Over of Token.t (* "override" *)
-]
-
-type preproc_arg = Token.t
-
-type delete_method_clause = (
-    Token.t (* "=" *) * Token.t (* "delete" *) * Token.t (* ";" *)
-)
-
-type pat_9d92f6a = Token.t (* pattern #[ 	]*ifndef *)
-
-type ms_call_modifier = [
-    `X___cdecl of Token.t (* "__cdecl" *)
-  | `X___clrc of Token.t (* "__clrcall" *)
-  | `X___stdc of Token.t (* "__stdcall" *)
-  | `X___fast of Token.t (* "__fastcall" *)
-  | `X___this of Token.t (* "__thiscall" *)
-  | `X___vect of Token.t (* "__vectorcall" *)
-]
-
-type tok_prec_p1_gt = Token.t
-
-type imm_tok_lpar = Token.t (* "(" *)
-
-type pat_56631e5 = Token.t (* pattern #[ 	]*else *)
-
-type lambda_default_capture = [
-    `EQ of Token.t (* "=" *)
-  | `AMP of Token.t (* "&" *)
-]
-
-type system_lib_string = Token.t
-
-type storage_class_specifier = [
-    `Extern of Token.t (* "extern" *)
-  | `Static of Token.t (* "static" *)
-  | `Regi of Token.t (* "register" *)
-  | `Inline of Token.t (* "inline" *)
-  | `X___inline of Token.t (* "__inline" *)
-  | `X___inline__ of Token.t (* "__inline__" *)
-  | `X___forc of Token.t (* "__forceinline" *)
-  | `Thread_local of Token.t (* "thread_local" *)
-  | `X___thread of Token.t (* "__thread" *)
-]
-
-type literal_suffix = Token.t (* pattern [a-zA-Z_]\w* *)
-
-type imm_tok_pat_509ec78 = Token.t (* pattern \r?\n *)
-
-type pat_a6d4183 = Token.t (* pattern #[ 	]*elifndef *)
-
-type raw_string_delimiter = Token.t
-
-type semgrep_metavar = Token.t (* pattern \$[A-Z_][A-Z_0-9]* *)
 
 type fold_operator = [
     `PLUS of Token.t (* "+" *)
@@ -214,6 +78,161 @@ type fold_operator = [
   | `Not_eq of Token.t (* "not_eq" *)
 ]
 
+type pat_bfeb4bb = Token.t (* pattern #[ 	]*elif *)
+
+type preproc_directive = Token.t (* pattern #[ \t]*[a-zA-Z0-9]\w* *)
+
+type access_specifier = [
+    `Public of Token.t (* "public" *)
+  | `Priv of Token.t (* "private" *)
+  | `Prot of Token.t (* "protected" *)
+]
+
+type default_method_clause = (
+    Token.t (* "=" *) * Token.t (* "default" *) * Token.t (* ";" *)
+)
+
+type pat_c3ea183 = Token.t (* pattern #[ 	]*define *)
+
+type anon_choice_DASHDASH_d11def2 = [
+    `DASHDASH of Token.t (* "--" *)
+  | `PLUSPLUS of Token.t (* "++" *)
+]
+
+type delete_method_clause = (
+    Token.t (* "=" *) * Token.t (* "delete" *) * Token.t (* ";" *)
+)
+
+type continue_statement = (Token.t (* "continue" *) * Token.t (* ";" *))
+
+type semgrep_named_ellipsis = Token.t (* pattern \$\.\.\.[A-Z_][A-Z_0-9]* *)
+
+type gnu_asm_qualifier = [
+    `Vola of Token.t (* "volatile" *)
+  | `Inline of Token.t (* "inline" *)
+  | `Goto of Token.t (* "goto" *)
+]
+
+type null = [
+    `NULL of Token.t (* "NULL" *)
+  | `Null of Token.t (* "nullptr" *)
+]
+
+type pat_a6d4183 = Token.t (* pattern #[ 	]*elifndef *)
+
+type primitive_type = Token.t
+
+type system_lib_string = Token.t
+
+type escape_sequence = Token.t
+
+type anon_choice_signed_a0bfc19 = [
+    `Signed of Token.t (* "signed" *)
+  | `Unsi of Token.t (* "unsigned" *)
+  | `Long of Token.t (* "long" *)
+  | `Short of Token.t (* "short" *)
+]
+
+type pat_0307ca2 = Token.t (* pattern #[ 	]*elifdef *)
+
+type ms_unaligned_ptr_modifier = [
+    `X__unal of Token.t (* "_unaligned" *)
+  | `X___unal of Token.t (* "__unaligned" *)
+]
+
+type true_ = Token.t
+
+type break_statement = (Token.t (* "break" *) * Token.t (* ";" *))
+
+type seh_leave_statement = (Token.t (* "__leave" *) * Token.t (* ";" *))
+
+type imm_tok_pat_36637e2 = Token.t (* pattern "[^\\n']" *)
+
+type pat_9d92f6a = Token.t (* pattern #[ 	]*ifndef *)
+
+type virtual_specifier = [
+    `Final of Token.t (* "final" *)
+  | `Over of Token.t (* "override" *)
+]
+
+type type_qualifier = [
+    `Choice_const of [
+        `Const of Token.t (* "const" *)
+      | `Cons of Token.t (* "constexpr" *)
+      | `Vola of Token.t (* "volatile" *)
+      | `Rest of Token.t (* "restrict" *)
+      | `X___rest__ of Token.t (* "__restrict__" *)
+      | `X___exte__ of Token.t (* "__extension__" *)
+      | `X__Atomic of Token.t (* "_Atomic" *)
+      | `X__Nore of Token.t (* "_Noreturn" *)
+      | `Nore of Token.t (* "noreturn" *)
+    ]
+  | `Muta of Token.t (* "mutable" *)
+  | `Cons_36fe86c of Token.t (* "constinit" *)
+  | `Cons_a25342f of Token.t (* "consteval" *)
+]
+
+type virtual_ = [ `Virt of Token.t (* "virtual" *) ]
+
+type false_ = Token.t
+
+type identifier =
+  Token.t (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *)
+
+type raw_string_delimiter = Token.t
+
+type number_literal = Token.t
+
+type pat_c46d1b2 = Token.t (* pattern #[ 	]*endif *)
+
+type pat_3df6e71 = Token.t (* pattern #[ 	]*if *)
+
+type preproc_arg = Token.t
+
+type literal_suffix = Token.t (* pattern [a-zA-Z_]\w* *)
+
+type storage_class_specifier = [
+    `Extern of Token.t (* "extern" *)
+  | `Static of Token.t (* "static" *)
+  | `Regi of Token.t (* "register" *)
+  | `Inline of Token.t (* "inline" *)
+  | `X___inline of Token.t (* "__inline" *)
+  | `X___inline__ of Token.t (* "__inline__" *)
+  | `X___forc of Token.t (* "__forceinline" *)
+  | `Thread_local of Token.t (* "thread_local" *)
+  | `X___thread of Token.t (* "__thread" *)
+]
+
+type pat_ca8830e = Token.t (* pattern #[ 	]*include *)
+
+type pat_25b90ba = Token.t (* pattern #[ 	]*ifdef *)
+
+type semgrep_metavar = Token.t (* pattern \$[A-Z_][A-Z_0-9]* *)
+
+type imm_tok_pat_509ec78 = Token.t (* pattern \r?\n *)
+
+type imm_tok_prec_p1_pat_c7f65b4 = Token.t (* pattern "[^\\\\\"\\n]+" *)
+
+type ms_call_modifier = [
+    `X___cdecl of Token.t (* "__cdecl" *)
+  | `X___clrc of Token.t (* "__clrcall" *)
+  | `X___stdc of Token.t (* "__stdcall" *)
+  | `X___fast of Token.t (* "__fastcall" *)
+  | `X___this of Token.t (* "__thiscall" *)
+  | `X___vect of Token.t (* "__vectorcall" *)
+]
+
+type imm_tok_lpar = Token.t (* "(" *)
+
+type pat_56631e5 = Token.t (* pattern #[ 	]*else *)
+
+type lambda_default_capture = [
+    `EQ of Token.t (* "=" *)
+  | `AMP of Token.t (* "&" *)
+]
+
+type raw_string_content = Token.t
+
 type anon_choice_BANG_67174d6 = [
     `BANG of Token.t (* "!" *)
   | `TILDE of Token.t (* "~" *)
@@ -221,15 +240,58 @@ type anon_choice_BANG_67174d6 = [
   | `PLUS of Token.t (* "+" *)
 ]
 
+type decltype_auto = (
+    Token.t (* "decltype" *) * Token.t (* "(" *) * Token.t (* "auto" *)
+  * Token.t (* ")" *)
+)
+
+type binary_fold_operator = (
+    fold_operator * Token.t (* "..." *) * fold_operator
+)
+
+type anon_choice_pat_0307ca2_dbf6a9d = [
+    `Pat_0307ca2 of pat_0307ca2
+  | `Pat_a6d4183 of pat_a6d4183
+]
+
+type ms_pointer_modifier = [
+    `Ms_unal_ptr_modi of ms_unaligned_ptr_modifier
+  | `Ms_rest_modi of Token.t (* "__restrict" *)
+  | `Ms_unsi_ptr_modi of Token.t (* "__uptr" *)
+  | `Ms_signed_ptr_modi of Token.t (* "__sptr" *)
+]
+
+type char_literal = (
+    [
+        `LSQUOT of Token.t (* "L'" *)
+      | `USQUOT_d861d39 of Token.t (* "u'" *)
+      | `USQUOT_2701bdc of Token.t (* "U'" *)
+      | `U8SQUOT of Token.t (* "u8'" *)
+      | `SQUOT of Token.t (* "'" *)
+    ]
+  * [
+        `Esc_seq of escape_sequence (*tok*)
+      | `Imm_tok_pat_36637e2 of imm_tok_pat_36637e2
+    ]
+      list (* one or more *)
+  * Token.t (* "'" *)
+)
+
 type anon_choice_access_spec_23a010c = [
     `Access_spec of access_specifier
   | `Access_spec_virt of (access_specifier * virtual_)
   | `Virt_access_spec of (virtual_ * access_specifier)
 ]
 
-type decltype_auto = (
-    Token.t (* "decltype" *) * Token.t (* "(" *) * Token.t (* "auto" *)
-  * Token.t (* ")" *)
+type anon_choice_pat_25b90ba_4a37f8c = [
+    `Pat_25b90ba of pat_25b90ba
+  | `Pat_9d92f6a of pat_9d92f6a
+]
+
+type preproc_call = (
+    preproc_directive (*tok*)
+  * preproc_arg (*tok*) option
+  * imm_tok_pat_509ec78
 )
 
 type string_literal = (
@@ -247,44 +309,6 @@ type string_literal = (
       list (* zero or more *)
   * Token.t (* "\"" *)
 )
-
-type char_literal = (
-    [
-        `LSQUOT of Token.t (* "L'" *)
-      | `USQUOT_d861d39 of Token.t (* "u'" *)
-      | `USQUOT_2701bdc of Token.t (* "U'" *)
-      | `U8SQUOT of Token.t (* "u8'" *)
-      | `SQUOT of Token.t (* "'" *)
-    ]
-  * [
-        `Esc_seq of escape_sequence (*tok*)
-      | `Imm_tok_pat_36637e2 of imm_tok_pat_36637e2
-    ]
-  * Token.t (* "'" *)
-)
-
-type anon_choice_pat_25b90ba_4a37f8c = [
-    `Pat_25b90ba of pat_25b90ba
-  | `Pat_9d92f6a of pat_9d92f6a
-]
-
-type ms_pointer_modifier = [
-    `Ms_unal_ptr_modi of ms_unaligned_ptr_modifier
-  | `Ms_rest_modi of Token.t (* "__restrict" *)
-  | `Ms_unsi_ptr_modi of Token.t (* "__uptr" *)
-  | `Ms_signed_ptr_modi of Token.t (* "__sptr" *)
-]
-
-type preproc_call = (
-    preproc_directive (*tok*)
-  * preproc_arg (*tok*) option
-  * imm_tok_pat_509ec78
-)
-
-type anon_choice_pat_0307ca2_dbf6a9d = [
-    `Pat_0307ca2 of pat_0307ca2
-  | `Pat_a6d4183 of pat_a6d4183
-]
 
 type raw_string_literal = (
     [
@@ -308,49 +332,12 @@ type raw_string_literal = (
   * Token.t (* "\"" *)
 )
 
-type binary_fold_operator = (
-    fold_operator * Token.t (* "..." *) * fold_operator
-)
-
-type type_parameter_declaration = (
-    anon_choice_type_a2fe5d4
-  * identifier (*tok*) option
-)
-
-type gnu_asm_goto_list = (
-    Token.t (* ":" *)
-  * (
-        identifier (*tok*)
-      * (Token.t (* "," *) * identifier (*tok*)) list (* zero or more *)
-    )
-      option
-)
-
-type anon_choice_name_id_fe6e1ce = [
-    `Id of identifier (*tok*)
-  | `Vari_param of Token.t (* "..." *)
-]
-
-type ms_declspec_modifier = (
-    Token.t (* "__declspec" *) * Token.t (* "(" *) * identifier (*tok*)
-  * Token.t (* ")" *)
-)
-
 type destructor_name = (Token.t (* "~" *) * identifier (*tok*))
 
-type variadic_declarator = (Token.t (* "..." *) * identifier (*tok*) option)
-
-type sized_type_specifier = (
-    anon_choice_signed_a0bfc19 list (* one or more *)
-  * [ `Id of identifier (*tok*) | `Prim_type of primitive_type (*tok*) ]
-      option
-)
-
-type variadic_type_parameter_declaration = (
-    anon_choice_type_a2fe5d4
-  * Token.t (* "..." *)
-  * identifier (*tok*) option
-)
+type field_identifier = [
+    `Id of identifier (*tok*)
+  | `Semg_ellips of Token.t (* "..." *)
+]
 
 type operator_name = (
     Token.t (* "operator" *)
@@ -422,13 +409,6 @@ type anon_choice_name_id_d3c4b5f = [
   | `DOTDOTDOT of Token.t (* "..." *)
 ]
 
-type preproc_def = (
-    pat_c3ea183
-  * identifier (*tok*)
-  * preproc_arg (*tok*) option
-  * imm_tok_pat_509ec78
-)
-
 type preproc_defined = [
     `Defi_LPAR_id_RPAR of (
         Token.t (* "defined" *) * Token.t (* "(" *) * identifier (*tok*)
@@ -437,19 +417,58 @@ type preproc_defined = [
   | `Defi_id of (Token.t (* "defined" *) * identifier (*tok*))
 ]
 
-type field_identifier = [
-    `Id of identifier (*tok*)
-  | `Semg_ellips of Token.t (* "..." *)
-]
+type type_parameter_declaration = (
+    anon_choice_type_a2fe5d4
+  * identifier (*tok*) option
+)
+
+type preproc_def = (
+    pat_c3ea183
+  * identifier (*tok*)
+  * preproc_arg (*tok*) option
+  * imm_tok_pat_509ec78
+)
 
 type namespace_specifier = (
     Token.t (* "inline" *) option
   * identifier (*tok*)
 )
 
+type anon_choice_name_id_1a79fc3 = [
+    `Id of identifier (*tok*)
+  | `Prim_type of primitive_type (*tok*)
+]
+
+type variadic_declarator = (Token.t (* "..." *) * identifier (*tok*) option)
+
+type ms_declspec_modifier = (
+    Token.t (* "__declspec" *) * Token.t (* "(" *) * identifier (*tok*)
+  * Token.t (* ")" *)
+)
+
+type gnu_asm_goto_list = (
+    Token.t (* ":" *)
+  * (
+        identifier (*tok*)
+      * (Token.t (* "," *) * identifier (*tok*)) list (* zero or more *)
+    )
+      option
+)
+
 type goto_statement = (
     Token.t (* "goto" *) * identifier (*tok*) * Token.t (* ";" *)
 )
+
+type variadic_type_parameter_declaration = (
+    anon_choice_type_a2fe5d4
+  * Token.t (* "..." *)
+  * identifier (*tok*) option
+)
+
+type anon_choice_name_id_fe6e1ce = [
+    `Id of identifier (*tok*)
+  | `Vari_param of Token.t (* "..." *)
+]
 
 type gnu_asm_clobber_list = (
     Token.t (* ":" *)
@@ -474,21 +493,7 @@ type anon_choice_name_id_dd8d494 = [
   | `Raw_str_lit of raw_string_literal
 ]
 
-type old_style_parameter_list = (
-    Token.t (* "(" *)
-  * (
-        anon_choice_name_id_fe6e1ce
-      * (Token.t (* "," *) * anon_choice_name_id_fe6e1ce)
-          list (* zero or more *)
-    )
-      option
-  * Token.t (* ")" *)
-)
-
-type variadic_reference_declarator = (
-    [ `AMPAMP of Token.t (* "&&" *) | `AMP of Token.t (* "&" *) ]
-  * variadic_declarator
-)
+type field_designator = (Token.t (* "." *) * field_identifier)
 
 type preproc_params = (
     imm_tok_lpar (*tok*)
@@ -583,8 +588,6 @@ and preproc_expression = [
     )
 ]
 
-type field_designator = (Token.t (* "." *) * field_identifier)
-
 type nested_namespace_specifier = (
     namespace_specifier option
   * Token.t (* "::" *)
@@ -592,6 +595,35 @@ type nested_namespace_specifier = (
         `Nested_name_spec of nested_namespace_specifier
       | `Name_spec of namespace_specifier
     ]
+)
+
+type sized_type_specifier = [
+    `Rep_choice_signed_opt_choice_id_rep1_choice_signed of (
+        anon_choice_signed_a0bfc19 list (* zero or more *)
+      * anon_choice_name_id_1a79fc3 option
+      * anon_choice_signed_a0bfc19 list (* one or more *)
+    )
+  | `Rep1_choice_signed_opt_choice_id_rep_choice_signed of (
+        anon_choice_signed_a0bfc19 list (* one or more *)
+      * anon_choice_name_id_1a79fc3 option
+      * anon_choice_signed_a0bfc19 list (* zero or more *)
+    )
+]
+
+type variadic_reference_declarator = (
+    [ `AMPAMP of Token.t (* "&&" *) | `AMP of Token.t (* "&" *) ]
+  * variadic_declarator
+)
+
+type old_style_parameter_list = (
+    Token.t (* "(" *)
+  * (
+        anon_choice_name_id_fe6e1ce
+      * (Token.t (* "," *) * anon_choice_name_id_fe6e1ce)
+          list (* zero or more *)
+    )
+      option
+  * Token.t (* ")" *)
 )
 
 type gnu_asm_output_operand_list = (
@@ -664,7 +696,7 @@ and abstract_declarator = [
       | `Abst_array_decl of abstract_array_declarator
       | `Abst_paren_decl of abstract_parenthesized_declarator
     ]
-  | `Abst_ref_decl of (ref_qualifier * abstract_declarator option)
+  | `Abst_ref_decl of abstract_reference_declarator
 ]
 
 and abstract_function_declarator = (
@@ -679,6 +711,11 @@ and abstract_parenthesized_declarator = (
 and abstract_pointer_declarator = (
     Token.t (* "*" *)
   * type_qualifier list (* zero or more *)
+  * abstract_declarator option
+)
+
+and abstract_reference_declarator = (
+    ref_qualifier
   * abstract_declarator option
 )
 
@@ -748,15 +785,7 @@ and anon_choice_exp_55b4dba = [
 ]
 
 and anon_choice_init_pair_1a6981e = [
-    `Init_pair of (
-        [
-            `Subs_desi of subscript_designator
-          | `Field_desi of field_designator
-        ]
-          list (* one or more *)
-      * Token.t (* "=" *)
-      * anon_choice_exp_3078596
-    )
+    `Init_pair of initializer_pair
   | `Exp of expression
   | `Init_list of initializer_list
 ]
@@ -814,6 +843,34 @@ and anon_choice_prep_else_8b52b0f = [
     )
 ]
 
+and anon_choice_prep_else_in_enum_list_8258275 = [
+    `Prep_else_in_enum_list of (
+        pat_56631e5
+      * (enumerator * Token.t (* "," *)) list (* zero or more *)
+    )
+  | `Prep_elif_in_enum_list of (
+        pat_bfeb4bb
+      * preproc_expression
+      * Token.t (* "\n" *)
+      * (enumerator * Token.t (* "," *)) list (* zero or more *)
+      * anon_choice_prep_else_in_enum_list_8258275 option
+    )
+]
+
+and anon_choice_prep_else_in_enum_list_no_comma_04fd5a5 = [
+    `Prep_else_in_enum_list_no_comma of (
+        pat_56631e5
+      * enumerator list (* zero or more *)
+    )
+  | `Prep_elif_in_enum_list_no_comma of (
+        pat_bfeb4bb
+      * preproc_expression
+      * Token.t (* "\n" *)
+      * enumerator list (* zero or more *)
+      * anon_choice_prep_else_in_enum_list_no_comma_04fd5a5 option
+    )
+]
+
 and anon_choice_prep_else_in_field_decl_list_97ea65e = [
     `Prep_else_in_field_decl_list of (
         pat_56631e5
@@ -862,24 +919,12 @@ and array_field_declarator = (
 )
 
 and assignment_expression = (
-    assignment_left_expression
-  * [
-        `EQ of Token.t (* "=" *)
-      | `STAREQ of Token.t (* "*=" *)
-      | `SLASHEQ of Token.t (* "/=" *)
-      | `PERCEQ of Token.t (* "%=" *)
-      | `PLUSEQ of Token.t (* "+=" *)
-      | `DASHEQ of Token.t (* "-=" *)
-      | `LTLTEQ of Token.t (* "<<=" *)
-      | `GTGTEQ of Token.t (* ">>=" *)
-      | `AMPEQ of Token.t (* "&=" *)
-      | `HATEQ of Token.t (* "^=" *)
-      | `BAREQ of Token.t (* "|=" *)
-      | `And_eq of Token.t (* "and_eq" *)
-      | `Or_eq of Token.t (* "or_eq" *)
-      | `Xor_eq of Token.t (* "xor_eq" *)
-    ]
+    assignment_left_expression * anon_choice_EQ_6389fc4
   * anon_choice_exp_3078596
+)
+
+and assignment_expression_lhs_expression = (
+    expression * anon_choice_EQ_6389fc4 * anon_choice_exp_3078596
 )
 
 and assignment_left_expression = [
@@ -1240,6 +1285,7 @@ and enum_base_clause = (
   * [
         `Qual_type_id of qualified_type_identifier
       | `Id of identifier (*tok*)
+      | `Prim_type of primitive_type (*tok*)
       | `Sized_type_spec of sized_type_specifier
     ]
 )
@@ -1251,9 +1297,20 @@ and enumerator = (
 
 and enumerator_list = (
     Token.t (* "{" *)
-  * (enumerator * (Token.t (* "," *) * enumerator) list (* zero or more *))
+  * [
+        `Enum_COMMA of (enumerator * Token.t (* "," *))
+      | `Prep_if_in_enum_list of preproc_if_in_enumerator_list
+      | `Prep_ifdef_in_enum_list of preproc_ifdef_in_enumerator_list
+    ]
+      list (* zero or more *)
+  * [
+        `Enum of enumerator
+      | `Prep_if_in_enum_list_no_comma of
+          preproc_if_in_enumerator_list_no_comma
+      | `Prep_ifdef_in_enum_list_no_comma of
+          preproc_ifdef_in_enumerator_list_no_comma
+    ]
       option
-  * Token.t (* "," *) option
   * Token.t (* "}" *)
 )
 
@@ -1640,6 +1697,22 @@ and initializer_list = (
   * Token.t (* "}" *)
 )
 
+and initializer_pair = [
+    `Rep1_choice_subs_desi_EQ_choice_exp of (
+        [
+            `Subs_desi of subscript_designator
+          | `Field_desi of field_designator
+          | `Subs_range_desi of subscript_range_designator
+        ]
+          list (* one or more *)
+      * Token.t (* "=" *)
+      * anon_choice_exp_3078596
+    )
+  | `Choice_id_COLON_choice_exp of (
+        field_identifier * Token.t (* ":" *) * anon_choice_exp_3078596
+    )
+]
+
 and labeled_statement = (identifier (*tok*) * Token.t (* ":" *) * statement)
 
 and lambda_capture_specifier = (
@@ -1712,6 +1785,8 @@ and non_case_statement = [
       | `Brk_stmt of break_statement
       | `Cont_stmt of continue_statement
       | `Goto_stmt of goto_statement
+      | `Seh_try_stmt of seh_try_statement
+      | `Seh_leave_stmt of seh_leave_statement
     ]
   | `Co_ret_stmt of co_return_statement
   | `Co_yield_stmt of co_yield_statement
@@ -1744,7 +1819,8 @@ and operator_cast_definition = (
 
 and optional_parameter_declaration = (
     declaration_specifiers
-  * declarator option
+  * [ `Decl of declarator | `Abst_ref_decl of abstract_reference_declarator ]
+      option
   * Token.t (* "=" *)
   * expression
 )
@@ -1776,15 +1852,22 @@ and parenthesized_declarator = (
     Token.t (* "(" *) * declarator * Token.t (* ")" *)
 )
 
-and parenthesized_expression = (
-    Token.t (* "(" *)
-  * [
-        `Exp of expression
-      | `Comma_exp of comma_expression
-      | `Semg_typed_meta of semgrep_typed_metavar
+and parenthesized_expression = [
+    `Choice_LPAR_choice_exp_RPAR of [
+        `LPAR_choice_exp_RPAR of (
+            Token.t (* "(" *) * anon_choice_exp_55b4dba * Token.t (* ")" *)
+        )
+      | `LPAR_assign_exp_lhs_exp_RPAR of (
+            Token.t (* "(" *) * assignment_expression_lhs_expression
+          * Token.t (* ")" *)
+        )
     ]
-  * Token.t (* ")" *)
-)
+  | `LPAR_choice_semg_typed_meta_RPAR of (
+        Token.t (* "(" *)
+      * [ `Semg_typed_meta of semgrep_typed_metavar ]
+      * Token.t (* ")" *)
+    )
+]
 
 and parenthesized_field_declarator = (
     Token.t (* "(" *) * field_declarator * Token.t (* ")" *)
@@ -1835,6 +1918,24 @@ and preproc_if = (
   * pat_c46d1b2
 )
 
+and preproc_if_in_enumerator_list = (
+    pat_3df6e71
+  * preproc_expression
+  * Token.t (* "\n" *)
+  * (enumerator * Token.t (* "," *)) list (* zero or more *)
+  * anon_choice_prep_else_in_enum_list_8258275 option
+  * pat_c46d1b2
+)
+
+and preproc_if_in_enumerator_list_no_comma = (
+    pat_3df6e71
+  * preproc_expression
+  * Token.t (* "\n" *)
+  * enumerator list (* zero or more *)
+  * anon_choice_prep_else_in_enum_list_no_comma_04fd5a5 option
+  * pat_c46d1b2
+)
+
 and preproc_if_in_field_declaration_list = (
     pat_3df6e71
   * preproc_expression
@@ -1850,6 +1951,32 @@ and preproc_ifdef = (
   * block_item list (* zero or more *)
   * [
         `Choice_prep_else of anon_choice_prep_else_8b52b0f
+      | `Prep_elif of preproc_elifdef
+    ]
+      option
+  * pat_c46d1b2
+)
+
+and preproc_ifdef_in_enumerator_list = (
+    anon_choice_pat_25b90ba_4a37f8c
+  * identifier (*tok*)
+  * (enumerator * Token.t (* "," *)) list (* zero or more *)
+  * [
+        `Choice_prep_else_in_enum_list of
+          anon_choice_prep_else_in_enum_list_8258275
+      | `Prep_elif of preproc_elifdef
+    ]
+      option
+  * pat_c46d1b2
+)
+
+and preproc_ifdef_in_enumerator_list_no_comma = (
+    anon_choice_pat_25b90ba_4a37f8c
+  * identifier (*tok*)
+  * enumerator list (* zero or more *)
+  * [
+        `Choice_prep_else_in_enum_list_no_comma of
+          anon_choice_prep_else_in_enum_list_no_comma_04fd5a5
       | `Prep_elif of preproc_elifdef
     ]
       option
@@ -1995,6 +2122,21 @@ and scope_resolution = (
   * Token.t (* "::" *)
 )
 
+and seh_except_clause = (
+    Token.t (* "__except" *) * parenthesized_expression * compound_statement
+)
+
+and seh_finally_clause = (Token.t (* "__finally" *) * compound_statement)
+
+and seh_try_statement = (
+    Token.t (* "__try" *)
+  * compound_statement
+  * [
+        `Seh_except_clause of seh_except_clause
+      | `Seh_fina_clause of seh_finally_clause
+    ]
+)
+
 and semgrep_typed_metavar = (type_descriptor * semgrep_metavar (*tok*))
 
 and sizeof_expression = [
@@ -2050,6 +2192,11 @@ and subscript_designator = (
 )
 
 and subscript_expression = (expression * subscript_argument_list)
+
+and subscript_range_designator = (
+    Token.t (* "[" *) * expression * Token.t (* "..." *) * expression
+  * Token.t (* "]" *)
+)
 
 and switch_statement = (
     Token.t (* "switch" *) * condition_clause * compound_statement
@@ -2246,11 +2393,11 @@ and variadic_parameter_declaration = (
 
 and while_statement = (Token.t (* "while" *) * condition_clause * statement)
 
-type old_style_function_declarator = (declarator * old_style_parameter_list)
-
 type top_level_expression_statement = (
     expression_not_binary * Token.t (* ";" *)
 )
+
+type old_style_function_declarator = (declarator * old_style_parameter_list)
 
 type top_level_statement = [
     `Choice_choice_case_stmt of [
@@ -2311,27 +2458,27 @@ type translation_unit = [
   | `Semg_exp of (Token.t (* "__SEMGREP_EXPRESSION" *) * expression)
 ]
 
-type ms_unsigned_ptr_modifier (* inlined *) = Token.t (* "__uptr" *)
-
-type variadic_parameter (* inlined *) = Token.t (* "..." *)
-
-type this (* inlined *) = Token.t (* "this" *)
-
-type auto (* inlined *) = Token.t (* "auto" *)
-
-type comment (* inlined *) = Token.t
-
 type ms_signed_ptr_modifier (* inlined *) = Token.t (* "__sptr" *)
 
 type ms_restrict_modifier (* inlined *) = Token.t (* "__restrict" *)
 
-type semgrep_ellipsis (* inlined *) = Token.t (* "..." *)
+type ms_unsigned_ptr_modifier (* inlined *) = Token.t (* "__uptr" *)
 
-type namespace_identifier (* inlined *) = identifier (*tok*)
+type auto (* inlined *) = Token.t (* "auto" *)
+
+type this (* inlined *) = Token.t (* "this" *)
+
+type comment (* inlined *) = Token.t
+
+type variadic_parameter (* inlined *) = Token.t (* "..." *)
+
+type semgrep_ellipsis (* inlined *) = Token.t (* "..." *)
 
 type type_identifier (* inlined *) = identifier (*tok*)
 
 type statement_identifier (* inlined *) = identifier (*tok*)
+
+type namespace_identifier (* inlined *) = identifier (*tok*)
 
 type structured_binding_declarator (* inlined *) = (
     Token.t (* "[" *)
@@ -2346,11 +2493,6 @@ type preproc_parenthesized_expression (* inlined *) = (
 
 type preproc_unary_expression (* inlined *) = (
     anon_choice_BANG_67174d6 * preproc_expression
-)
-
-type abstract_reference_declarator (* inlined *) = (
-    ref_qualifier
-  * abstract_declarator option
 )
 
 type array_type_declarator (* inlined *) = (
@@ -2429,13 +2571,6 @@ type function_type_declarator (* inlined *) = (
     type_declarator * parameter_list
 )
 
-type initializer_pair (* inlined *) = (
-    [ `Subs_desi of subscript_designator | `Field_desi of field_designator ]
-      list (* one or more *)
-  * Token.t (* "=" *)
-  * anon_choice_exp_3078596
-)
-
 type inline_method_definition (* inlined *) = (
     declaration_specifiers
   * field_declarator
@@ -2481,6 +2616,22 @@ type preproc_elif (* inlined *) = (
   * anon_choice_prep_else_8b52b0f option
 )
 
+type preproc_elif_in_enumerator_list (* inlined *) = (
+    pat_bfeb4bb
+  * preproc_expression
+  * Token.t (* "\n" *)
+  * (enumerator * Token.t (* "," *)) list (* zero or more *)
+  * anon_choice_prep_else_in_enum_list_8258275 option
+)
+
+type preproc_elif_in_enumerator_list_no_comma (* inlined *) = (
+    pat_bfeb4bb
+  * preproc_expression
+  * Token.t (* "\n" *)
+  * enumerator list (* zero or more *)
+  * anon_choice_prep_else_in_enum_list_no_comma_04fd5a5 option
+)
+
 type preproc_elif_in_field_declaration_list (* inlined *) = (
     pat_bfeb4bb
   * preproc_expression
@@ -2492,6 +2643,16 @@ type preproc_elif_in_field_declaration_list (* inlined *) = (
 type preproc_else (* inlined *) = (
     pat_56631e5
   * block_item list (* zero or more *)
+)
+
+type preproc_else_in_enumerator_list (* inlined *) = (
+    pat_56631e5
+  * (enumerator * Token.t (* "," *)) list (* zero or more *)
+)
+
+type preproc_else_in_enumerator_list_no_comma (* inlined *) = (
+    pat_56631e5
+  * enumerator list (* zero or more *)
 )
 
 type preproc_else_in_field_declaration_list (* inlined *) = (
@@ -2540,6 +2701,25 @@ type union_specifier (* inlined *) = (
     Token.t (* "union" *) * class_declaration
 )
 
+type preproc_elifdef_in_enumerator_list_no_comma (* inlined *) = (
+    anon_choice_pat_0307ca2_dbf6a9d
+  * identifier (*tok*)
+  * enumerator list (* zero or more *)
+  * anon_choice_prep_else_in_enum_list_no_comma_04fd5a5 option
+)
+
+type preproc_elifdef_in_enumerator_list (* inlined *) = (
+    anon_choice_pat_0307ca2_dbf6a9d
+  * identifier (*tok*)
+  * (enumerator * Token.t (* "," *)) list (* zero or more *)
+  * anon_choice_prep_else_in_enum_list_8258275 option
+)
+
+type macro_type_specifier (* inlined *) = (
+    identifier (*tok*) * Token.t (* "(" *) * type_descriptor
+  * Token.t (* ")" *)
+)
+
 type preproc_elifdef_in_field_declaration_list (* inlined *) = (
     anon_choice_pat_0307ca2_dbf6a9d
   * identifier (*tok*)
@@ -2556,11 +2736,6 @@ type field_declaration_declarator (* inlined *) = (
 
 type semgrep_expression (* inlined *) = (
     Token.t (* "__SEMGREP_EXPRESSION" *) * expression
-)
-
-type macro_type_specifier (* inlined *) = (
-    identifier (*tok*) * Token.t (* "(" *) * type_descriptor
-  * Token.t (* ")" *)
 )
 
 type old_style_function_definition (* inlined *) = (
