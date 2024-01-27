@@ -19,6 +19,9 @@ let token (env : env) (tok : Tree_sitter_run.Token.t) =
 let blank (env : env) () =
   R.Tuple []
 
+let map_true_ (env : env) (tok : CST.true_) =
+  (* true *) token env tok
+
 let map_anon_choice_EQ_6389fc4 (env : env) (x : CST.anon_choice_EQ_6389fc4) =
   (match x with
   | `EQ tok -> R.Case ("EQ",
@@ -65,9 +68,6 @@ let map_anon_choice_EQ_6389fc4 (env : env) (x : CST.anon_choice_EQ_6389fc4) =
     )
   )
 
-let map_tok_prec_p1_gt (env : env) (tok : CST.tok_prec_p1_gt) =
-  (* tok_prec_p1_gt *) token env tok
-
 let map_anon_choice_type_a2fe5d4 (env : env) (x : CST.anon_choice_type_a2fe5d4) =
   (match x with
   | `Type tok -> R.Case ("Type",
@@ -78,15 +78,8 @@ let map_anon_choice_type_a2fe5d4 (env : env) (x : CST.anon_choice_type_a2fe5d4) 
     )
   )
 
-let map_ref_qualifier (env : env) (x : CST.ref_qualifier) =
-  (match x with
-  | `AMP tok -> R.Case ("AMP",
-      (* "&" *) token env tok
-    )
-  | `AMPAMP tok -> R.Case ("AMPAMP",
-      (* "&&" *) token env tok
-    )
-  )
+let map_primitive_type (env : env) (tok : CST.primitive_type) =
+  (* primitive_type *) token env tok
 
 let map_fold_operator (env : env) (x : CST.fold_operator) =
   (match x with
@@ -255,8 +248,36 @@ let map_continue_statement (env : env) ((v1, v2) : CST.continue_statement) =
   let v2 = (* ";" *) token env v2 in
   R.Tuple [v1; v2]
 
-let map_semgrep_named_ellipsis (env : env) (tok : CST.semgrep_named_ellipsis) =
-  (* pattern \$\.\.\.[A-Z_][A-Z_0-9]* *) token env tok
+let map_storage_class_specifier (env : env) (x : CST.storage_class_specifier) =
+  (match x with
+  | `Extern tok -> R.Case ("Extern",
+      (* "extern" *) token env tok
+    )
+  | `Static tok -> R.Case ("Static",
+      (* "static" *) token env tok
+    )
+  | `Regi tok -> R.Case ("Regi",
+      (* "register" *) token env tok
+    )
+  | `Inline tok -> R.Case ("Inline",
+      (* "inline" *) token env tok
+    )
+  | `X___inline tok -> R.Case ("X___inline",
+      (* "__inline" *) token env tok
+    )
+  | `X___inline__ tok -> R.Case ("X___inline__",
+      (* "__inline__" *) token env tok
+    )
+  | `X___forc tok -> R.Case ("X___forc",
+      (* "__forceinline" *) token env tok
+    )
+  | `Thread_local tok -> R.Case ("Thread_local",
+      (* "thread_local" *) token env tok
+    )
+  | `X___thread tok -> R.Case ("X___thread",
+      (* "__thread" *) token env tok
+    )
+  )
 
 let map_gnu_asm_qualifier (env : env) (x : CST.gnu_asm_qualifier) =
   (match x with
@@ -283,12 +304,6 @@ let map_null (env : env) (x : CST.null) =
 
 let map_pat_a6d4183 (env : env) (tok : CST.pat_a6d4183) =
   (* pattern #[ 	]*elifndef *) token env tok
-
-let map_primitive_type (env : env) (tok : CST.primitive_type) =
-  (* primitive_type *) token env tok
-
-let map_system_lib_string (env : env) (tok : CST.system_lib_string) =
-  (* system_lib_string *) token env tok
 
 let map_escape_sequence (env : env) (tok : CST.escape_sequence) =
   (* escape_sequence *) token env tok
@@ -319,35 +334,6 @@ let map_ms_unaligned_ptr_modifier (env : env) (x : CST.ms_unaligned_ptr_modifier
     )
   | `X___unal tok -> R.Case ("X___unal",
       (* "__unaligned" *) token env tok
-    )
-  )
-
-let map_true_ (env : env) (tok : CST.true_) =
-  (* true *) token env tok
-
-let map_break_statement (env : env) ((v1, v2) : CST.break_statement) =
-  let v1 = (* "break" *) token env v1 in
-  let v2 = (* ";" *) token env v2 in
-  R.Tuple [v1; v2]
-
-let map_seh_leave_statement (env : env) ((v1, v2) : CST.seh_leave_statement) =
-  let v1 = (* "__leave" *) token env v1 in
-  let v2 = (* ";" *) token env v2 in
-  R.Tuple [v1; v2]
-
-let map_imm_tok_pat_36637e2 (env : env) (tok : CST.imm_tok_pat_36637e2) =
-  (* pattern "[^\\n']" *) token env tok
-
-let map_pat_9d92f6a (env : env) (tok : CST.pat_9d92f6a) =
-  (* pattern #[ 	]*ifndef *) token env tok
-
-let map_virtual_specifier (env : env) (x : CST.virtual_specifier) =
-  (match x with
-  | `Final tok -> R.Case ("Final",
-      (* "final" *) token env tok
-    )
-  | `Over tok -> R.Case ("Over",
-      (* "override" *) token env tok
     )
   )
 
@@ -395,12 +381,19 @@ let map_type_qualifier (env : env) (x : CST.type_qualifier) =
     )
   )
 
-let map_virtual_ (env : env) (x : CST.virtual_) =
-  (match x with
-  | `Virt tok -> R.Case ("Virt",
-      (* "virtual" *) token env tok
-    )
-  )
+let map_break_statement (env : env) ((v1, v2) : CST.break_statement) =
+  let v1 = (* "break" *) token env v1 in
+  let v2 = (* ";" *) token env v2 in
+  R.Tuple [v1; v2]
+
+let map_semgrep_metavar (env : env) (tok : CST.semgrep_metavar) =
+  (* pattern \$[A-Z_][A-Z_0-9]* *) token env tok
+
+let map_imm_tok_pat_36637e2 (env : env) (tok : CST.imm_tok_pat_36637e2) =
+  (* pattern "[^\\n']" *) token env tok
+
+let map_pat_9d92f6a (env : env) (tok : CST.pat_9d92f6a) =
+  (* pattern #[ 	]*ifndef *) token env tok
 
 let map_false_ (env : env) (tok : CST.false_) =
   (* false *) token env tok
@@ -408,11 +401,23 @@ let map_false_ (env : env) (tok : CST.false_) =
 let map_identifier (env : env) (tok : CST.identifier) =
   (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env tok
 
-let map_raw_string_delimiter (env : env) (tok : CST.raw_string_delimiter) =
-  (* raw_string_delimiter *) token env tok
+let map_seh_leave_statement (env : env) ((v1, v2) : CST.seh_leave_statement) =
+  let v1 = (* "__leave" *) token env v1 in
+  let v2 = (* ";" *) token env v2 in
+  R.Tuple [v1; v2]
+
+let map_virtual_ (env : env) (x : CST.virtual_) =
+  (match x with
+  | `Virt tok -> R.Case ("Virt",
+      (* "virtual" *) token env tok
+    )
+  )
 
 let map_number_literal (env : env) (tok : CST.number_literal) =
   (* number_literal *) token env tok
+
+let map_raw_string_delimiter (env : env) (tok : CST.raw_string_delimiter) =
+  (* raw_string_delimiter *) token env tok
 
 let map_pat_c46d1b2 (env : env) (tok : CST.pat_c46d1b2) =
   (* pattern #[ 	]*endif *) token env tok
@@ -426,45 +431,30 @@ let map_preproc_arg (env : env) (tok : CST.preproc_arg) =
 let map_literal_suffix (env : env) (tok : CST.literal_suffix) =
   (* pattern [a-zA-Z_]\w* *) token env tok
 
-let map_storage_class_specifier (env : env) (x : CST.storage_class_specifier) =
-  (match x with
-  | `Extern tok -> R.Case ("Extern",
-      (* "extern" *) token env tok
-    )
-  | `Static tok -> R.Case ("Static",
-      (* "static" *) token env tok
-    )
-  | `Regi tok -> R.Case ("Regi",
-      (* "register" *) token env tok
-    )
-  | `Inline tok -> R.Case ("Inline",
-      (* "inline" *) token env tok
-    )
-  | `X___inline tok -> R.Case ("X___inline",
-      (* "__inline" *) token env tok
-    )
-  | `X___inline__ tok -> R.Case ("X___inline__",
-      (* "__inline__" *) token env tok
-    )
-  | `X___forc tok -> R.Case ("X___forc",
-      (* "__forceinline" *) token env tok
-    )
-  | `Thread_local tok -> R.Case ("Thread_local",
-      (* "thread_local" *) token env tok
-    )
-  | `X___thread tok -> R.Case ("X___thread",
-      (* "__thread" *) token env tok
-    )
-  )
+let map_semgrep_named_ellipsis (env : env) (tok : CST.semgrep_named_ellipsis) =
+  (* pattern \$\.\.\.[A-Z_][A-Z_0-9]* *) token env tok
+
+let map_system_lib_string (env : env) (tok : CST.system_lib_string) =
+  (* system_lib_string *) token env tok
 
 let map_pat_ca8830e (env : env) (tok : CST.pat_ca8830e) =
   (* pattern #[ 	]*include *) token env tok
 
+let map_tok_prec_p1_gt (env : env) (tok : CST.tok_prec_p1_gt) =
+  (* tok_prec_p1_gt *) token env tok
+
+let map_virtual_specifier (env : env) (x : CST.virtual_specifier) =
+  (match x with
+  | `Final tok -> R.Case ("Final",
+      (* "final" *) token env tok
+    )
+  | `Over tok -> R.Case ("Over",
+      (* "override" *) token env tok
+    )
+  )
+
 let map_pat_25b90ba (env : env) (tok : CST.pat_25b90ba) =
   (* pattern #[ 	]*ifdef *) token env tok
-
-let map_semgrep_metavar (env : env) (tok : CST.semgrep_metavar) =
-  (* pattern \$[A-Z_][A-Z_0-9]* *) token env tok
 
 let map_imm_tok_pat_509ec78 (env : env) (tok : CST.imm_tok_pat_509ec78) =
   (* pattern \r?\n *) token env tok
@@ -500,6 +490,9 @@ let map_imm_tok_lpar (env : env) (tok : CST.imm_tok_lpar) =
 let map_pat_56631e5 (env : env) (tok : CST.pat_56631e5) =
   (* pattern #[ 	]*else *) token env tok
 
+let map_raw_string_content (env : env) (tok : CST.raw_string_content) =
+  (* raw_string_content *) token env tok
+
 let map_lambda_default_capture (env : env) (x : CST.lambda_default_capture) =
   (match x with
   | `EQ tok -> R.Case ("EQ",
@@ -510,8 +503,15 @@ let map_lambda_default_capture (env : env) (x : CST.lambda_default_capture) =
     )
   )
 
-let map_raw_string_content (env : env) (tok : CST.raw_string_content) =
-  (* raw_string_content *) token env tok
+let map_ref_qualifier (env : env) (x : CST.ref_qualifier) =
+  (match x with
+  | `AMP tok -> R.Case ("AMP",
+      (* "&" *) token env tok
+    )
+  | `AMPAMP tok -> R.Case ("AMPAMP",
+      (* "&&" *) token env tok
+    )
+  )
 
 let map_anon_choice_BANG_67174d6 (env : env) (x : CST.anon_choice_BANG_67174d6) =
   (match x with
@@ -923,6 +923,17 @@ let map_operator_name (env : env) ((v1, v2) : CST.operator_name) =
   in
   R.Tuple [v1; v2]
 
+let map_type_parameter_declaration (env : env) ((v1, v2) : CST.type_parameter_declaration) =
+  let v1 = map_anon_choice_type_a2fe5d4 env v1 in
+  let v2 =
+    (match v2 with
+    | Some tok -> R.Option (Some (
+        (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env tok
+      ))
+    | None -> R.Option None)
+  in
+  R.Tuple [v1; v2]
+
 let map_anon_choice_name_id_d3c4b5f (env : env) (x : CST.anon_choice_name_id_d3c4b5f) =
   (match x with
   | `Id tok -> R.Case ("Id",
@@ -953,8 +964,8 @@ let map_preproc_defined (env : env) (x : CST.preproc_defined) =
     )
   )
 
-let map_type_parameter_declaration (env : env) ((v1, v2) : CST.type_parameter_declaration) =
-  let v1 = map_anon_choice_type_a2fe5d4 env v1 in
+let map_variadic_declarator (env : env) ((v1, v2) : CST.variadic_declarator) =
+  let v1 = (* "..." *) token env v1 in
   let v2 =
     (match v2 with
     | Some tok -> R.Option (Some (
@@ -1002,16 +1013,17 @@ let map_anon_choice_name_id_1a79fc3 (env : env) (x : CST.anon_choice_name_id_1a7
     )
   )
 
-let map_variadic_declarator (env : env) ((v1, v2) : CST.variadic_declarator) =
-  let v1 = (* "..." *) token env v1 in
-  let v2 =
-    (match v2 with
+let map_variadic_type_parameter_declaration (env : env) ((v1, v2, v3) : CST.variadic_type_parameter_declaration) =
+  let v1 = map_anon_choice_type_a2fe5d4 env v1 in
+  let v2 = (* "..." *) token env v2 in
+  let v3 =
+    (match v3 with
     | Some tok -> R.Option (Some (
         (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env tok
       ))
     | None -> R.Option None)
   in
-  R.Tuple [v1; v2]
+  R.Tuple [v1; v2; v3]
 
 let map_ms_declspec_modifier (env : env) ((v1, v2, v3, v4) : CST.ms_declspec_modifier) =
   let v1 = (* "__declspec" *) token env v1 in
@@ -1051,18 +1063,6 @@ let map_goto_statement (env : env) ((v1, v2, v3) : CST.goto_statement) =
     (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env v2
   in
   let v3 = (* ";" *) token env v3 in
-  R.Tuple [v1; v2; v3]
-
-let map_variadic_type_parameter_declaration (env : env) ((v1, v2, v3) : CST.variadic_type_parameter_declaration) =
-  let v1 = map_anon_choice_type_a2fe5d4 env v1 in
-  let v2 = (* "..." *) token env v2 in
-  let v3 =
-    (match v3 with
-    | Some tok -> R.Option (Some (
-        (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env tok
-      ))
-    | None -> R.Option None)
-  in
   R.Tuple [v1; v2; v3]
 
 let map_anon_choice_name_id_fe6e1ce (env : env) (x : CST.anon_choice_name_id_fe6e1ce) =
@@ -1325,6 +1325,20 @@ and map_preproc_expression (env : env) (x : CST.preproc_expression) =
     )
   )
 
+let map_variadic_reference_declarator (env : env) ((v1, v2) : CST.variadic_reference_declarator) =
+  let v1 =
+    (match v1 with
+    | `AMPAMP tok -> R.Case ("AMPAMP",
+        (* "&&" *) token env tok
+      )
+    | `AMP tok -> R.Case ("AMP",
+        (* "&" *) token env tok
+      )
+    )
+  in
+  let v2 = map_variadic_declarator env v2 in
+  R.Tuple [v1; v2]
+
 let rec map_nested_namespace_specifier (env : env) ((v1, v2, v3) : CST.nested_namespace_specifier) =
   let v1 =
     (match v1 with
@@ -1381,20 +1395,6 @@ let map_sized_type_specifier (env : env) (x : CST.sized_type_specifier) =
       R.Tuple [v1; v2; v3]
     )
   )
-
-let map_variadic_reference_declarator (env : env) ((v1, v2) : CST.variadic_reference_declarator) =
-  let v1 =
-    (match v1 with
-    | `AMPAMP tok -> R.Case ("AMPAMP",
-        (* "&&" *) token env tok
-      )
-    | `AMP tok -> R.Case ("AMP",
-        (* "&" *) token env tok
-      )
-    )
-  in
-  let v2 = map_variadic_declarator env v2 in
-  R.Tuple [v1; v2]
 
 let map_old_style_parameter_list (env : env) ((v1, v2, v3) : CST.old_style_parameter_list) =
   let v1 = (* "(" *) token env v1 in
@@ -2978,6 +2978,11 @@ and map_enumerator_list (env : env) ((v1, v2, v3, v4) : CST.enumerator_list) =
       | `Prep_ifdef_in_enum_list x -> R.Case ("Prep_ifdef_in_enum_list",
           map_preproc_ifdef_in_enumerator_list env x
         )
+      | `Prep_call_COMMA (v1, v2) -> R.Case ("Prep_call_COMMA",
+          let v1 = map_preproc_call env v1 in
+          let v2 = (* "," *) token env v2 in
+          R.Tuple [v1; v2]
+        )
       )
     ) v2)
   in
@@ -2993,6 +2998,9 @@ and map_enumerator_list (env : env) ((v1, v2, v3, v4) : CST.enumerator_list) =
           )
         | `Prep_ifdef_in_enum_list_no_comma x -> R.Case ("Prep_ifdef_in_enum_list_no_comma",
             map_preproc_ifdef_in_enumerator_list_no_comma env x
+          )
+        | `Prep_call x -> R.Case ("Prep_call",
+            map_preproc_call env x
           )
         )
       ))
@@ -4321,15 +4329,9 @@ and map_parenthesized_expression (env : env) (x : CST.parenthesized_expression) 
         )
       )
     )
-  | `LPAR_choice_semg_typed_meta_RPAR (v1, v2, v3) -> R.Case ("LPAR_choice_semg_typed_meta_RPAR",
+  | `LPAR_semg_typed_meta_RPAR (v1, v2, v3) -> R.Case ("LPAR_semg_typed_meta_RPAR",
       let v1 = (* "(" *) token env v1 in
-      let v2 =
-        (match v2 with
-        | `Semg_typed_meta x -> R.Case ("Semg_typed_meta",
-            map_semgrep_typed_metavar env x
-          )
-        )
-      in
+      let v2 = map_semgrep_typed_metavar env v2 in
       let v3 = (* ")" *) token env v3 in
       R.Tuple [v1; v2; v3]
     )
@@ -4413,6 +4415,59 @@ and map_preproc_elifdef (env : env) ((v1, v2, v3, v4) : CST.preproc_elifdef) =
     (match v4 with
     | Some x -> R.Option (Some (
         map_anon_choice_prep_else_8b52b0f env x
+      ))
+    | None -> R.Option None)
+  in
+  R.Tuple [v1; v2; v3; v4]
+
+and map_preproc_elifdef_in_enumerator_list (env : env) ((v1, v2, v3, v4) : CST.preproc_elifdef_in_enumerator_list) =
+  let v1 = map_anon_choice_pat_0307ca2_dbf6a9d env v1 in
+  let v2 =
+    (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env v2
+  in
+  let v3 =
+    R.List (List.map (fun (v1, v2) ->
+      let v1 = map_enumerator env v1 in
+      let v2 = (* "," *) token env v2 in
+      R.Tuple [v1; v2]
+    ) v3)
+  in
+  let v4 =
+    (match v4 with
+    | Some x -> R.Option (Some (
+        map_anon_choice_prep_else_in_enum_list_8258275 env x
+      ))
+    | None -> R.Option None)
+  in
+  R.Tuple [v1; v2; v3; v4]
+
+and map_preproc_elifdef_in_enumerator_list_no_comma (env : env) ((v1, v2, v3, v4) : CST.preproc_elifdef_in_enumerator_list_no_comma) =
+  let v1 = map_anon_choice_pat_0307ca2_dbf6a9d env v1 in
+  let v2 =
+    (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env v2
+  in
+  let v3 = R.List (List.map (map_enumerator env) v3) in
+  let v4 =
+    (match v4 with
+    | Some x -> R.Option (Some (
+        map_anon_choice_prep_else_in_enum_list_no_comma_04fd5a5 env x
+      ))
+    | None -> R.Option None)
+  in
+  R.Tuple [v1; v2; v3; v4]
+
+and map_preproc_elifdef_in_field_declaration_list (env : env) ((v1, v2, v3, v4) : CST.preproc_elifdef_in_field_declaration_list) =
+  let v1 = map_anon_choice_pat_0307ca2_dbf6a9d env v1 in
+  let v2 =
+    (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env v2
+  in
+  let v3 =
+    R.List (List.map (map_field_declaration_list_item env) v3)
+  in
+  let v4 =
+    (match v4 with
+    | Some x -> R.Option (Some (
+        map_anon_choice_prep_else_in_field_decl_list_97ea65e env x
       ))
     | None -> R.Option None)
   in
@@ -4528,8 +4583,8 @@ and map_preproc_ifdef_in_enumerator_list (env : env) ((v1, v2, v3, v4, v5) : CST
         | `Choice_prep_else_in_enum_list x -> R.Case ("Choice_prep_else_in_enum_list",
             map_anon_choice_prep_else_in_enum_list_8258275 env x
           )
-        | `Prep_elif x -> R.Case ("Prep_elif",
-            map_preproc_elifdef env x
+        | `Prep_elif_in_enum_list x -> R.Case ("Prep_elif_in_enum_list",
+            map_preproc_elifdef_in_enumerator_list env x
           )
         )
       ))
@@ -4551,8 +4606,8 @@ and map_preproc_ifdef_in_enumerator_list_no_comma (env : env) ((v1, v2, v3, v4, 
         | `Choice_prep_else_in_enum_list_no_comma x -> R.Case ("Choice_prep_else_in_enum_list_no_comma",
             map_anon_choice_prep_else_in_enum_list_no_comma_04fd5a5 env x
           )
-        | `Prep_elif x -> R.Case ("Prep_elif",
-            map_preproc_elifdef env x
+        | `Prep_elif_in_enum_list_no_comma x -> R.Case ("Prep_elif_in_enum_list_no_comma",
+            map_preproc_elifdef_in_enumerator_list_no_comma env x
           )
         )
       ))
@@ -4576,8 +4631,8 @@ and map_preproc_ifdef_in_field_declaration_list (env : env) ((v1, v2, v3, v4, v5
         | `Choice_prep_else_in_field_decl_list x -> R.Case ("Choice_prep_else_in_field_decl_list",
             map_anon_choice_prep_else_in_field_decl_list_97ea65e env x
           )
-        | `Prep_elif x -> R.Case ("Prep_elif",
-            map_preproc_elifdef env x
+        | `Prep_elif_in_field_decl_list x -> R.Case ("Prep_elif_in_field_decl_list",
+            map_preproc_elifdef_in_field_declaration_list env x
           )
         )
       ))
