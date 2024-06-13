@@ -39,12 +39,12 @@ Last change in file:
       disambiguate fold vs parenthesized assignment (#239)
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
-Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: 3d1430be0571d000ee343617ed8f7d9e97475be8
+Git repo name: ocaml-tree-sitter-semgrep2
+Latest commit in repo: 58c33ed8a5f59344124fe5840dc8a493c67d1c32
 Last change in file:
-  commit 3d1430be0571d000ee343617ed8f7d9e97475be8
+  commit 5f3836d894376e97f7582fd32c2bd01b98697886
   Author: brandonspark <wu.brandonj@gmail.com>
-  Date:   Fri Jan 26 16:43:12 2024 -0800
+  Date:   Mon Jan 29 15:03:38 2024 -0800
   
       remove redundant choice
 ---
