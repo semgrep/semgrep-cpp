@@ -2747,3 +2747,7 @@ type old_style_function_definition (* inlined *) = (
   * declaration list (* zero or more *)
   * compound_statement
 )
+
+type extra = Comment of Loc.t * comment
+
+type extras = extra list
