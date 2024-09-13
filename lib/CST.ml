@@ -2748,6 +2748,6 @@ type old_style_function_definition (* inlined *) = (
   * compound_statement
 )
 
-type extra = Comment of Loc.t * comment
+type extra = [ `Comment of Loc.t * comment ]
 
 type extras = extra list
