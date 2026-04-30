@@ -162,7 +162,7 @@ type type_qualifier = [
 
 type break_statement = (Token.t (* "break" *) * Token.t (* ";" *))
 
-type semgrep_metavar = Token.t (* pattern \$[A-Z_][A-Z_0-9]* *)
+type semgrep_metavar = Token.t
 
 type imm_tok_pat_36637e2 = Token.t (* pattern "[^\\n']" *)
 
@@ -339,70 +339,73 @@ type field_identifier = [
   | `Semg_ellips of Token.t (* "..." *)
 ]
 
-type operator_name = (
-    Token.t (* "operator" *)
-  * [
-        `Co_await of Token.t (* "co_await" *)
-      | `PLUS of Token.t (* "+" *)
-      | `DASH of Token.t (* "-" *)
-      | `STAR of Token.t (* "*" *)
-      | `SLASH of Token.t (* "/" *)
-      | `PERC of Token.t (* "%" *)
-      | `HAT of Token.t (* "^" *)
-      | `AMP of Token.t (* "&" *)
-      | `BAR of Token.t (* "|" *)
-      | `TILDE of Token.t (* "~" *)
-      | `BANG of Token.t (* "!" *)
-      | `EQ of Token.t (* "=" *)
-      | `LT of Token.t (* "<" *)
-      | `GT of Token.t (* ">" *)
-      | `PLUSEQ of Token.t (* "+=" *)
-      | `DASHEQ of Token.t (* "-=" *)
-      | `STAREQ of Token.t (* "*=" *)
-      | `SLASHEQ of Token.t (* "/=" *)
-      | `PERCEQ of Token.t (* "%=" *)
-      | `HATEQ of Token.t (* "^=" *)
-      | `AMPEQ of Token.t (* "&=" *)
-      | `BAREQ of Token.t (* "|=" *)
-      | `LTLT of Token.t (* "<<" *)
-      | `GTGT of Token.t (* ">>" *)
-      | `GTGTEQ of Token.t (* ">>=" *)
-      | `LTLTEQ of Token.t (* "<<=" *)
-      | `EQEQ of Token.t (* "==" *)
-      | `BANGEQ of Token.t (* "!=" *)
-      | `LTEQ of Token.t (* "<=" *)
-      | `GTEQ of Token.t (* ">=" *)
-      | `LTEQGT of Token.t (* "<=>" *)
-      | `AMPAMP of Token.t (* "&&" *)
-      | `BARBAR of Token.t (* "||" *)
-      | `PLUSPLUS of Token.t (* "++" *)
-      | `DASHDASH of Token.t (* "--" *)
-      | `COMMA of Token.t (* "," *)
-      | `DASHGTSTAR of Token.t (* "->*" *)
-      | `DASHGT of Token.t (* "->" *)
-      | `LPARRPAR of Token.t (* "()" *)
-      | `LBRACKRBRACK of Token.t (* "[]" *)
-      | `Xor of Token.t (* "xor" *)
-      | `Bitand of Token.t (* "bitand" *)
-      | `Bitor of Token.t (* "bitor" *)
-      | `Compl of Token.t (* "compl" *)
-      | `Not of Token.t (* "not" *)
-      | `Xor_eq of Token.t (* "xor_eq" *)
-      | `And_eq of Token.t (* "and_eq" *)
-      | `Or_eq of Token.t (* "or_eq" *)
-      | `Not_eq of Token.t (* "not_eq" *)
-      | `And of Token.t (* "and" *)
-      | `Or of Token.t (* "or" *)
-      | `Choice_new_opt_LBRACKRBRACK of (
-            [
-                `New of Token.t (* "new" *)
-              | `Delete of Token.t (* "delete" *)
-            ]
-          * Token.t (* "[]" *) option
-        )
-      | `DQUOTDQUOT_id of (Token.t (* "\"\"" *) * identifier (*tok*))
-    ]
-)
+type operator_name = [
+    `Op_choice_co_await of (
+        Token.t (* "operator" *)
+      * [
+            `Co_await of Token.t (* "co_await" *)
+          | `PLUS of Token.t (* "+" *)
+          | `DASH of Token.t (* "-" *)
+          | `STAR of Token.t (* "*" *)
+          | `SLASH of Token.t (* "/" *)
+          | `PERC of Token.t (* "%" *)
+          | `HAT of Token.t (* "^" *)
+          | `AMP of Token.t (* "&" *)
+          | `BAR of Token.t (* "|" *)
+          | `TILDE of Token.t (* "~" *)
+          | `BANG of Token.t (* "!" *)
+          | `EQ of Token.t (* "=" *)
+          | `LT of Token.t (* "<" *)
+          | `GT of Token.t (* ">" *)
+          | `PLUSEQ of Token.t (* "+=" *)
+          | `DASHEQ of Token.t (* "-=" *)
+          | `STAREQ of Token.t (* "*=" *)
+          | `SLASHEQ of Token.t (* "/=" *)
+          | `PERCEQ of Token.t (* "%=" *)
+          | `HATEQ of Token.t (* "^=" *)
+          | `AMPEQ of Token.t (* "&=" *)
+          | `BAREQ of Token.t (* "|=" *)
+          | `LTLT of Token.t (* "<<" *)
+          | `GTGT of Token.t (* ">>" *)
+          | `GTGTEQ of Token.t (* ">>=" *)
+          | `LTLTEQ of Token.t (* "<<=" *)
+          | `EQEQ of Token.t (* "==" *)
+          | `BANGEQ of Token.t (* "!=" *)
+          | `LTEQ of Token.t (* "<=" *)
+          | `GTEQ of Token.t (* ">=" *)
+          | `LTEQGT of Token.t (* "<=>" *)
+          | `AMPAMP of Token.t (* "&&" *)
+          | `BARBAR of Token.t (* "||" *)
+          | `PLUSPLUS of Token.t (* "++" *)
+          | `DASHDASH of Token.t (* "--" *)
+          | `COMMA of Token.t (* "," *)
+          | `DASHGTSTAR of Token.t (* "->*" *)
+          | `DASHGT of Token.t (* "->" *)
+          | `LPARRPAR of Token.t (* "()" *)
+          | `LBRACKRBRACK of Token.t (* "[]" *)
+          | `Xor of Token.t (* "xor" *)
+          | `Bitand of Token.t (* "bitand" *)
+          | `Bitor of Token.t (* "bitor" *)
+          | `Compl of Token.t (* "compl" *)
+          | `Not of Token.t (* "not" *)
+          | `Xor_eq of Token.t (* "xor_eq" *)
+          | `And_eq of Token.t (* "and_eq" *)
+          | `Or_eq of Token.t (* "or_eq" *)
+          | `Not_eq of Token.t (* "not_eq" *)
+          | `And of Token.t (* "and" *)
+          | `Or of Token.t (* "or" *)
+          | `Choice_new_opt_LBRACKRBRACK of (
+                [
+                    `New of Token.t (* "new" *)
+                  | `Delete of Token.t (* "delete" *)
+                ]
+              * Token.t (* "[]" *) option
+            )
+          | `DQUOTDQUOT_id of (Token.t (* "\"\"" *) * identifier (*tok*))
+        ]
+    )
+  | `Op_semg_meta of (Token.t (* "operator" *) * semgrep_metavar (*tok*))
+]
 
 type type_parameter_declaration = (
     anon_choice_type_a2fe5d4
@@ -1302,6 +1305,8 @@ and enumerator_list = (
       | `Prep_if_in_enum_list of preproc_if_in_enumerator_list
       | `Prep_ifdef_in_enum_list of preproc_ifdef_in_enumerator_list
       | `Prep_call_COMMA of (preproc_call * Token.t (* "," *))
+      | `Semg_ellips_COMMA of (Token.t (* "..." *) * Token.t (* "," *))
+      | `Semg_meta_COMMA of (semgrep_metavar (*tok*) * Token.t (* "," *))
     ]
       list (* zero or more *)
   * [
@@ -1311,6 +1316,8 @@ and enumerator_list = (
       | `Prep_ifdef_in_enum_list_no_comma of
           preproc_ifdef_in_enumerator_list_no_comma
       | `Prep_call of preproc_call
+      | `Semg_ellips of Token.t (* "..." *)
+      | `Semg_meta of semgrep_metavar (*tok*)
     ]
       option
   * Token.t (* "}" *)
@@ -1419,35 +1426,32 @@ and field_declaration_list = (
 )
 
 and field_declaration_list_item = [
-    `Choice_field_decl of [
-        `Field_decl of field_declaration
-      | `Prep_def of preproc_def
-      | `Prep_func_def of preproc_function_def
-      | `Prep_call of preproc_call
-      | `Prep_if_in_field_decl_list of preproc_if_in_field_declaration_list
-      | `Prep_ifdef_in_field_decl_list of
-          preproc_ifdef_in_field_declaration_list
-    ]
-  | `Temp_decl of template_declaration
-  | `Inline_meth_defi of (
-        declaration_specifiers
-      * field_declarator
-      * [
-            `Choice_comp_stmt of anon_choice_comp_stmt_e6a11e2
-          | `Defa_meth_clause of default_method_clause
-          | `Delete_meth_clause of delete_method_clause
+    `Choice_choice_field_decl of [
+        `Choice_field_decl of [
+            `Field_decl of field_declaration
+          | `Prep_def of preproc_def
+          | `Prep_func_def of preproc_function_def
+          | `Prep_call of preproc_call
+          | `Prep_if_in_field_decl_list of
+              preproc_if_in_field_declaration_list
+          | `Prep_ifdef_in_field_decl_list of
+              preproc_ifdef_in_field_declaration_list
         ]
-    )
-  | `Cons_or_dest_defi of constructor_or_destructor_definition
-  | `Cons_or_dest_decl of constructor_or_destructor_declaration
-  | `Op_cast_defi of operator_cast_definition
-  | `Op_cast_decl of operator_cast_declaration
-  | `Friend_decl of friend_declaration
-  | `Access_spec_COLON of (access_specifier * Token.t (* ":" *))
-  | `Alias_decl of alias_declaration
-  | `Using_decl of using_declaration
-  | `Type_defi of type_definition
-  | `Static_assert_decl of static_assert_declaration
+      | `Temp_decl of template_declaration
+      | `Inline_meth_defi of inline_method_definition
+      | `Cons_or_dest_defi of constructor_or_destructor_definition
+      | `Cons_or_dest_decl of constructor_or_destructor_declaration
+      | `Op_cast_defi of operator_cast_definition
+      | `Op_cast_decl of operator_cast_declaration
+      | `Friend_decl of friend_declaration
+      | `Access_spec_COLON of (access_specifier * Token.t (* ":" *))
+      | `Alias_decl of alias_declaration
+      | `Using_decl of using_declaration
+      | `Type_defi of type_definition
+      | `Static_assert_decl of static_assert_declaration
+    ]
+  | `Semg_ellips of Token.t (* "..." *)
+  | `Semg_meta of semgrep_metavar (*tok*)
 ]
 
 and field_declarator = [
@@ -1714,6 +1718,16 @@ and initializer_pair = [
         field_identifier * Token.t (* ":" *) * anon_choice_exp_3078596
     )
 ]
+
+and inline_method_definition = (
+    declaration_specifiers
+  * field_declarator
+  * [
+        `Choice_comp_stmt of anon_choice_comp_stmt_e6a11e2
+      | `Defa_meth_clause of default_method_clause
+      | `Delete_meth_clause of delete_method_clause
+    ]
+)
 
 and labeled_statement = (identifier (*tok*) * Token.t (* ":" *) * statement)
 
@@ -2592,16 +2606,6 @@ type enum_specifier (* inlined *) = (
 
 type function_type_declarator (* inlined *) = (
     type_declarator * parameter_list
-)
-
-type inline_method_definition (* inlined *) = (
-    declaration_specifiers
-  * field_declarator
-  * [
-        `Choice_comp_stmt of anon_choice_comp_stmt_e6a11e2
-      | `Defa_meth_clause of default_method_clause
-      | `Delete_meth_clause of delete_method_clause
-    ]
 )
 
 type new_expression (* inlined *) = (
