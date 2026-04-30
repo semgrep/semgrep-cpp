@@ -2,11 +2,11 @@ File: semgrep-grammars/src/tree-sitter-c/LICENSE
 Git repo name: tree-sitter-c
 Latest commit in repo: ecdd500806cf8154d944344f1df6418b32e0e9a7
 Last change in file:
-  commit ecdd500806cf8154d944344f1df6418b32e0e9a7
-  Author: Brandon Wu <49291449+brandonspark@users.noreply.github.com>
-  Date:   Fri Jan 26 12:20:17 2024 -0800
+  commit af2904ca831cbb33cdc3bb7bacc2ed9840bd0a3c
+  Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
+  Date:   Fri Sep 5 23:53:51 2014 -0700
   
-      fix: properly suffix elifdef
+      Initial commit
 ---
 File: semgrep-grammars/src/tree-sitter-c/grammar.js
 Git repo name: tree-sitter-c
@@ -22,11 +22,11 @@ File: semgrep-grammars/src/tree-sitter-cpp/LICENSE
 Git repo name: tree-sitter-cpp
 Latest commit in repo: 4ca37be8e70e5a40ae95688bec56b886ba945888
 Last change in file:
-  commit 4ca37be8e70e5a40ae95688bec56b886ba945888
-  Author: Brandon Wu <49291449+brandonspark@users.noreply.github.com>
-  Date:   Fri Jan 26 08:33:26 2024 -0800
+  commit d8966822015417d060ffaafd95a71a49dd28ec99
+  Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
+  Date:   Fri Jan 15 11:04:19 2016 -0800
   
-      disambiguate fold vs parenthesized assignment (#239)
+      Initial commit
 ---
 File: semgrep-grammars/src/tree-sitter-cpp/grammar.js
 Git repo name: tree-sitter-cpp
@@ -39,12 +39,30 @@ Last change in file:
       disambiguate fold vs parenthesized assignment (#239)
 ---
 File: semgrep-grammars/src/semgrep-cpp/grammar.js
-Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: 091f5438fc0c15b80217f00e5b94ec0e55517383
+Git repo name: agent-aab45847a71009554
+Latest commit in repo: 9244700fc8ed0c101f640a33c6f4c115ad73d3b5
 Last change in file:
-  commit 5f3836d894376e97f7582fd32c2bd01b98697886
-  Author: brandonspark <wu.brandonj@gmail.com>
-  Date:   Mon Jan 29 15:03:38 2024 -0800
+  commit 9244700fc8ed0c101f640a33c6f4c115ad73d3b5
+  Author: brandonspark <brandon@semgrep.com>
+  Date:   Wed Apr 29 17:34:00 2026 -0700
   
-      remove redundant choice
+      fix(cpp): allow Semgrep patterns in class/struct/enum bodies and operator overloads
+      
+      Augments the C++ grammar so canonical Semgrep patterns parse cleanly:
+      
+      - LANG-486: `...` and `$X` inside class/struct bodies (via
+        `_field_declaration_list_item`) and enum bodies (via a wholesale
+        override of `enumerator_list`, since the upstream rule is a `seq`).
+      - LANG-497: `operator $OP` as an operator name (via a `previous`-style
+        augmentation of `operator_name`).
+      
+      The `semgrep_metavar` token gets a precedence bump so the lexer prefers
+      it over `identifier` (whose regex also accepts a leading `$`) when both
+      are valid at a position; this is what lets a bare `$X` parse as a
+      metavariable inside enum/struct bodies instead of as a malformed
+      declaration or enumerator.
+      
+      Adds 6 corpus tests covering the minimal ticket repros.
+      
+      Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 ---

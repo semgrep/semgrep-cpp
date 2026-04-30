@@ -387,7 +387,7 @@ let map_break_statement (env : env) ((v1, v2) : CST.break_statement) =
   R.Tuple [v1; v2]
 
 let map_semgrep_metavar (env : env) (tok : CST.semgrep_metavar) =
-  (* pattern \$[A-Z_][A-Z_0-9]* *) token env tok
+  (* semgrep_metavar *) token env tok
 
 let map_imm_tok_pat_36637e2 (env : env) (tok : CST.imm_tok_pat_36637e2) =
   (* pattern "[^\\n']" *) token env tok
@@ -735,193 +735,202 @@ let map_field_identifier (env : env) (x : CST.field_identifier) =
     )
   )
 
-let map_operator_name (env : env) ((v1, v2) : CST.operator_name) =
-  let v1 = (* "operator" *) token env v1 in
-  let v2 =
-    (match v2 with
-    | `Co_await tok -> R.Case ("Co_await",
-        (* "co_await" *) token env tok
-      )
-    | `PLUS tok -> R.Case ("PLUS",
-        (* "+" *) token env tok
-      )
-    | `DASH tok -> R.Case ("DASH",
-        (* "-" *) token env tok
-      )
-    | `STAR tok -> R.Case ("STAR",
-        (* "*" *) token env tok
-      )
-    | `SLASH tok -> R.Case ("SLASH",
-        (* "/" *) token env tok
-      )
-    | `PERC tok -> R.Case ("PERC",
-        (* "%" *) token env tok
-      )
-    | `HAT tok -> R.Case ("HAT",
-        (* "^" *) token env tok
-      )
-    | `AMP tok -> R.Case ("AMP",
-        (* "&" *) token env tok
-      )
-    | `BAR tok -> R.Case ("BAR",
-        (* "|" *) token env tok
-      )
-    | `TILDE tok -> R.Case ("TILDE",
-        (* "~" *) token env tok
-      )
-    | `BANG tok -> R.Case ("BANG",
-        (* "!" *) token env tok
-      )
-    | `EQ tok -> R.Case ("EQ",
-        (* "=" *) token env tok
-      )
-    | `LT tok -> R.Case ("LT",
-        (* "<" *) token env tok
-      )
-    | `GT tok -> R.Case ("GT",
-        (* ">" *) token env tok
-      )
-    | `PLUSEQ tok -> R.Case ("PLUSEQ",
-        (* "+=" *) token env tok
-      )
-    | `DASHEQ tok -> R.Case ("DASHEQ",
-        (* "-=" *) token env tok
-      )
-    | `STAREQ tok -> R.Case ("STAREQ",
-        (* "*=" *) token env tok
-      )
-    | `SLASHEQ tok -> R.Case ("SLASHEQ",
-        (* "/=" *) token env tok
-      )
-    | `PERCEQ tok -> R.Case ("PERCEQ",
-        (* "%=" *) token env tok
-      )
-    | `HATEQ tok -> R.Case ("HATEQ",
-        (* "^=" *) token env tok
-      )
-    | `AMPEQ tok -> R.Case ("AMPEQ",
-        (* "&=" *) token env tok
-      )
-    | `BAREQ tok -> R.Case ("BAREQ",
-        (* "|=" *) token env tok
-      )
-    | `LTLT tok -> R.Case ("LTLT",
-        (* "<<" *) token env tok
-      )
-    | `GTGT tok -> R.Case ("GTGT",
-        (* ">>" *) token env tok
-      )
-    | `GTGTEQ tok -> R.Case ("GTGTEQ",
-        (* ">>=" *) token env tok
-      )
-    | `LTLTEQ tok -> R.Case ("LTLTEQ",
-        (* "<<=" *) token env tok
-      )
-    | `EQEQ tok -> R.Case ("EQEQ",
-        (* "==" *) token env tok
-      )
-    | `BANGEQ tok -> R.Case ("BANGEQ",
-        (* "!=" *) token env tok
-      )
-    | `LTEQ tok -> R.Case ("LTEQ",
-        (* "<=" *) token env tok
-      )
-    | `GTEQ tok -> R.Case ("GTEQ",
-        (* ">=" *) token env tok
-      )
-    | `LTEQGT tok -> R.Case ("LTEQGT",
-        (* "<=>" *) token env tok
-      )
-    | `AMPAMP tok -> R.Case ("AMPAMP",
-        (* "&&" *) token env tok
-      )
-    | `BARBAR tok -> R.Case ("BARBAR",
-        (* "||" *) token env tok
-      )
-    | `PLUSPLUS tok -> R.Case ("PLUSPLUS",
-        (* "++" *) token env tok
-      )
-    | `DASHDASH tok -> R.Case ("DASHDASH",
-        (* "--" *) token env tok
-      )
-    | `COMMA tok -> R.Case ("COMMA",
-        (* "," *) token env tok
-      )
-    | `DASHGTSTAR tok -> R.Case ("DASHGTSTAR",
-        (* "->*" *) token env tok
-      )
-    | `DASHGT tok -> R.Case ("DASHGT",
-        (* "->" *) token env tok
-      )
-    | `LPARRPAR tok -> R.Case ("LPARRPAR",
-        (* "()" *) token env tok
-      )
-    | `LBRACKRBRACK tok -> R.Case ("LBRACKRBRACK",
-        (* "[]" *) token env tok
-      )
-    | `Xor tok -> R.Case ("Xor",
-        (* "xor" *) token env tok
-      )
-    | `Bitand tok -> R.Case ("Bitand",
-        (* "bitand" *) token env tok
-      )
-    | `Bitor tok -> R.Case ("Bitor",
-        (* "bitor" *) token env tok
-      )
-    | `Compl tok -> R.Case ("Compl",
-        (* "compl" *) token env tok
-      )
-    | `Not tok -> R.Case ("Not",
-        (* "not" *) token env tok
-      )
-    | `Xor_eq tok -> R.Case ("Xor_eq",
-        (* "xor_eq" *) token env tok
-      )
-    | `And_eq tok -> R.Case ("And_eq",
-        (* "and_eq" *) token env tok
-      )
-    | `Or_eq tok -> R.Case ("Or_eq",
-        (* "or_eq" *) token env tok
-      )
-    | `Not_eq tok -> R.Case ("Not_eq",
-        (* "not_eq" *) token env tok
-      )
-    | `And tok -> R.Case ("And",
-        (* "and" *) token env tok
-      )
-    | `Or tok -> R.Case ("Or",
-        (* "or" *) token env tok
-      )
-    | `Choice_new_opt_LBRACKRBRACK (v1, v2) -> R.Case ("Choice_new_opt_LBRACKRBRACK",
-        let v1 =
-          (match v1 with
-          | `New tok -> R.Case ("New",
-              (* "new" *) token env tok
-            )
-          | `Delete tok -> R.Case ("Delete",
-              (* "delete" *) token env tok
-            )
+let map_operator_name (env : env) (x : CST.operator_name) =
+  (match x with
+  | `Op_choice_co_await (v1, v2) -> R.Case ("Op_choice_co_await",
+      let v1 = (* "operator" *) token env v1 in
+      let v2 =
+        (match v2 with
+        | `Co_await tok -> R.Case ("Co_await",
+            (* "co_await" *) token env tok
           )
-        in
-        let v2 =
-          (match v2 with
-          | Some tok -> R.Option (Some (
-              (* "[]" *) token env tok
-            ))
-          | None -> R.Option None)
-        in
-        R.Tuple [v1; v2]
-      )
-    | `DQUOTDQUOT_id (v1, v2) -> R.Case ("DQUOTDQUOT_id",
-        let v1 = (* "\"\"" *) token env v1 in
-        let v2 =
-          (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env v2
-        in
-        R.Tuple [v1; v2]
-      )
+        | `PLUS tok -> R.Case ("PLUS",
+            (* "+" *) token env tok
+          )
+        | `DASH tok -> R.Case ("DASH",
+            (* "-" *) token env tok
+          )
+        | `STAR tok -> R.Case ("STAR",
+            (* "*" *) token env tok
+          )
+        | `SLASH tok -> R.Case ("SLASH",
+            (* "/" *) token env tok
+          )
+        | `PERC tok -> R.Case ("PERC",
+            (* "%" *) token env tok
+          )
+        | `HAT tok -> R.Case ("HAT",
+            (* "^" *) token env tok
+          )
+        | `AMP tok -> R.Case ("AMP",
+            (* "&" *) token env tok
+          )
+        | `BAR tok -> R.Case ("BAR",
+            (* "|" *) token env tok
+          )
+        | `TILDE tok -> R.Case ("TILDE",
+            (* "~" *) token env tok
+          )
+        | `BANG tok -> R.Case ("BANG",
+            (* "!" *) token env tok
+          )
+        | `EQ tok -> R.Case ("EQ",
+            (* "=" *) token env tok
+          )
+        | `LT tok -> R.Case ("LT",
+            (* "<" *) token env tok
+          )
+        | `GT tok -> R.Case ("GT",
+            (* ">" *) token env tok
+          )
+        | `PLUSEQ tok -> R.Case ("PLUSEQ",
+            (* "+=" *) token env tok
+          )
+        | `DASHEQ tok -> R.Case ("DASHEQ",
+            (* "-=" *) token env tok
+          )
+        | `STAREQ tok -> R.Case ("STAREQ",
+            (* "*=" *) token env tok
+          )
+        | `SLASHEQ tok -> R.Case ("SLASHEQ",
+            (* "/=" *) token env tok
+          )
+        | `PERCEQ tok -> R.Case ("PERCEQ",
+            (* "%=" *) token env tok
+          )
+        | `HATEQ tok -> R.Case ("HATEQ",
+            (* "^=" *) token env tok
+          )
+        | `AMPEQ tok -> R.Case ("AMPEQ",
+            (* "&=" *) token env tok
+          )
+        | `BAREQ tok -> R.Case ("BAREQ",
+            (* "|=" *) token env tok
+          )
+        | `LTLT tok -> R.Case ("LTLT",
+            (* "<<" *) token env tok
+          )
+        | `GTGT tok -> R.Case ("GTGT",
+            (* ">>" *) token env tok
+          )
+        | `GTGTEQ tok -> R.Case ("GTGTEQ",
+            (* ">>=" *) token env tok
+          )
+        | `LTLTEQ tok -> R.Case ("LTLTEQ",
+            (* "<<=" *) token env tok
+          )
+        | `EQEQ tok -> R.Case ("EQEQ",
+            (* "==" *) token env tok
+          )
+        | `BANGEQ tok -> R.Case ("BANGEQ",
+            (* "!=" *) token env tok
+          )
+        | `LTEQ tok -> R.Case ("LTEQ",
+            (* "<=" *) token env tok
+          )
+        | `GTEQ tok -> R.Case ("GTEQ",
+            (* ">=" *) token env tok
+          )
+        | `LTEQGT tok -> R.Case ("LTEQGT",
+            (* "<=>" *) token env tok
+          )
+        | `AMPAMP tok -> R.Case ("AMPAMP",
+            (* "&&" *) token env tok
+          )
+        | `BARBAR tok -> R.Case ("BARBAR",
+            (* "||" *) token env tok
+          )
+        | `PLUSPLUS tok -> R.Case ("PLUSPLUS",
+            (* "++" *) token env tok
+          )
+        | `DASHDASH tok -> R.Case ("DASHDASH",
+            (* "--" *) token env tok
+          )
+        | `COMMA tok -> R.Case ("COMMA",
+            (* "," *) token env tok
+          )
+        | `DASHGTSTAR tok -> R.Case ("DASHGTSTAR",
+            (* "->*" *) token env tok
+          )
+        | `DASHGT tok -> R.Case ("DASHGT",
+            (* "->" *) token env tok
+          )
+        | `LPARRPAR tok -> R.Case ("LPARRPAR",
+            (* "()" *) token env tok
+          )
+        | `LBRACKRBRACK tok -> R.Case ("LBRACKRBRACK",
+            (* "[]" *) token env tok
+          )
+        | `Xor tok -> R.Case ("Xor",
+            (* "xor" *) token env tok
+          )
+        | `Bitand tok -> R.Case ("Bitand",
+            (* "bitand" *) token env tok
+          )
+        | `Bitor tok -> R.Case ("Bitor",
+            (* "bitor" *) token env tok
+          )
+        | `Compl tok -> R.Case ("Compl",
+            (* "compl" *) token env tok
+          )
+        | `Not tok -> R.Case ("Not",
+            (* "not" *) token env tok
+          )
+        | `Xor_eq tok -> R.Case ("Xor_eq",
+            (* "xor_eq" *) token env tok
+          )
+        | `And_eq tok -> R.Case ("And_eq",
+            (* "and_eq" *) token env tok
+          )
+        | `Or_eq tok -> R.Case ("Or_eq",
+            (* "or_eq" *) token env tok
+          )
+        | `Not_eq tok -> R.Case ("Not_eq",
+            (* "not_eq" *) token env tok
+          )
+        | `And tok -> R.Case ("And",
+            (* "and" *) token env tok
+          )
+        | `Or tok -> R.Case ("Or",
+            (* "or" *) token env tok
+          )
+        | `Choice_new_opt_LBRACKRBRACK (v1, v2) -> R.Case ("Choice_new_opt_LBRACKRBRACK",
+            let v1 =
+              (match v1 with
+              | `New tok -> R.Case ("New",
+                  (* "new" *) token env tok
+                )
+              | `Delete tok -> R.Case ("Delete",
+                  (* "delete" *) token env tok
+                )
+              )
+            in
+            let v2 =
+              (match v2 with
+              | Some tok -> R.Option (Some (
+                  (* "[]" *) token env tok
+                ))
+              | None -> R.Option None)
+            in
+            R.Tuple [v1; v2]
+          )
+        | `DQUOTDQUOT_id (v1, v2) -> R.Case ("DQUOTDQUOT_id",
+            let v1 = (* "\"\"" *) token env v1 in
+            let v2 =
+              (* pattern \$?(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *) token env v2
+            in
+            R.Tuple [v1; v2]
+          )
+        )
+      in
+      R.Tuple [v1; v2]
     )
-  in
-  R.Tuple [v1; v2]
+  | `Op_semg_meta (v1, v2) -> R.Case ("Op_semg_meta",
+      let v1 = (* "operator" *) token env v1 in
+      let v2 = (* semgrep_metavar *) token env v2 in
+      R.Tuple [v1; v2]
+    )
+  )
 
 let map_type_parameter_declaration (env : env) ((v1, v2) : CST.type_parameter_declaration) =
   let v1 = map_anon_choice_type_a2fe5d4 env v1 in
@@ -2983,13 +2992,23 @@ and map_enumerator_list (env : env) ((v1, v2, v3, v4) : CST.enumerator_list) =
           let v2 = (* "," *) token env v2 in
           R.Tuple [v1; v2]
         )
+      | `Semg_ellips_COMMA (v1, v2) -> R.Case ("Semg_ellips_COMMA",
+          let v1 = (* "..." *) token env v1 in
+          let v2 = (* "," *) token env v2 in
+          R.Tuple [v1; v2]
+        )
+      | `Semg_meta_COMMA (v1, v2) -> R.Case ("Semg_meta_COMMA",
+          let v1 = (* semgrep_metavar *) token env v1 in
+          let v2 = (* "," *) token env v2 in
+          R.Tuple [v1; v2]
+        )
       )
     ) v2)
   in
   let v3 =
     (match v3 with
-    | Some v1 -> R.Option (Some (
-        (match v1 with
+    | Some x -> R.Option (Some (
+        (match x with
         | `Enum x -> R.Case ("Enum",
             map_enumerator env x
           )
@@ -3001,6 +3020,12 @@ and map_enumerator_list (env : env) ((v1, v2, v3, v4) : CST.enumerator_list) =
           )
         | `Prep_call x -> R.Case ("Prep_call",
             map_preproc_call env x
+          )
+        | `Semg_ellips tok -> R.Case ("Semg_ellips",
+            (* "..." *) token env tok
+          )
+        | `Semg_meta tok -> R.Case ("Semg_meta",
+            (* semgrep_metavar *) token env tok
           )
         )
       ))
@@ -3282,80 +3307,75 @@ and map_field_declaration_list (env : env) ((v1, v2, v3) : CST.field_declaration
 
 and map_field_declaration_list_item (env : env) (x : CST.field_declaration_list_item) =
   (match x with
-  | `Choice_field_decl x -> R.Case ("Choice_field_decl",
+  | `Choice_choice_field_decl x -> R.Case ("Choice_choice_field_decl",
       (match x with
-      | `Field_decl x -> R.Case ("Field_decl",
-          map_field_declaration env x
+      | `Choice_field_decl x -> R.Case ("Choice_field_decl",
+          (match x with
+          | `Field_decl x -> R.Case ("Field_decl",
+              map_field_declaration env x
+            )
+          | `Prep_def x -> R.Case ("Prep_def",
+              map_preproc_def env x
+            )
+          | `Prep_func_def x -> R.Case ("Prep_func_def",
+              map_preproc_function_def env x
+            )
+          | `Prep_call x -> R.Case ("Prep_call",
+              map_preproc_call env x
+            )
+          | `Prep_if_in_field_decl_list x -> R.Case ("Prep_if_in_field_decl_list",
+              map_preproc_if_in_field_declaration_list env x
+            )
+          | `Prep_ifdef_in_field_decl_list x -> R.Case ("Prep_ifdef_in_field_decl_list",
+              map_preproc_ifdef_in_field_declaration_list env x
+            )
+          )
         )
-      | `Prep_def x -> R.Case ("Prep_def",
-          map_preproc_def env x
+      | `Temp_decl x -> R.Case ("Temp_decl",
+          map_template_declaration env x
         )
-      | `Prep_func_def x -> R.Case ("Prep_func_def",
-          map_preproc_function_def env x
+      | `Inline_meth_defi x -> R.Case ("Inline_meth_defi",
+          map_inline_method_definition env x
         )
-      | `Prep_call x -> R.Case ("Prep_call",
-          map_preproc_call env x
+      | `Cons_or_dest_defi x -> R.Case ("Cons_or_dest_defi",
+          map_constructor_or_destructor_definition env x
         )
-      | `Prep_if_in_field_decl_list x -> R.Case ("Prep_if_in_field_decl_list",
-          map_preproc_if_in_field_declaration_list env x
+      | `Cons_or_dest_decl x -> R.Case ("Cons_or_dest_decl",
+          map_constructor_or_destructor_declaration env x
         )
-      | `Prep_ifdef_in_field_decl_list x -> R.Case ("Prep_ifdef_in_field_decl_list",
-          map_preproc_ifdef_in_field_declaration_list env x
+      | `Op_cast_defi x -> R.Case ("Op_cast_defi",
+          map_operator_cast_definition env x
+        )
+      | `Op_cast_decl x -> R.Case ("Op_cast_decl",
+          map_operator_cast_declaration env x
+        )
+      | `Friend_decl x -> R.Case ("Friend_decl",
+          map_friend_declaration env x
+        )
+      | `Access_spec_COLON (v1, v2) -> R.Case ("Access_spec_COLON",
+          let v1 = map_access_specifier env v1 in
+          let v2 = (* ":" *) token env v2 in
+          R.Tuple [v1; v2]
+        )
+      | `Alias_decl x -> R.Case ("Alias_decl",
+          map_alias_declaration env x
+        )
+      | `Using_decl x -> R.Case ("Using_decl",
+          map_using_declaration env x
+        )
+      | `Type_defi x -> R.Case ("Type_defi",
+          map_type_definition env x
+        )
+      | `Static_assert_decl x -> R.Case ("Static_assert_decl",
+          map_static_assert_declaration env x
         )
       )
     )
-  | `Temp_decl x -> R.Case ("Temp_decl",
-      map_template_declaration env x
+  | `Semg_ellips tok -> R.Case ("Semg_ellips",
+      (* "..." *) token env tok
     )
-  | `Inline_meth_defi (v1, v2, v3) -> R.Case ("Inline_meth_defi",
-      let v1 = map_declaration_specifiers env v1 in
-      let v2 = map_field_declarator env v2 in
-      let v3 =
-        (match v3 with
-        | `Choice_comp_stmt x -> R.Case ("Choice_comp_stmt",
-            map_anon_choice_comp_stmt_e6a11e2 env x
-          )
-        | `Defa_meth_clause x -> R.Case ("Defa_meth_clause",
-            map_default_method_clause env x
-          )
-        | `Delete_meth_clause x -> R.Case ("Delete_meth_clause",
-            map_delete_method_clause env x
-          )
-        )
-      in
-      R.Tuple [v1; v2; v3]
-    )
-  | `Cons_or_dest_defi x -> R.Case ("Cons_or_dest_defi",
-      map_constructor_or_destructor_definition env x
-    )
-  | `Cons_or_dest_decl x -> R.Case ("Cons_or_dest_decl",
-      map_constructor_or_destructor_declaration env x
-    )
-  | `Op_cast_defi x -> R.Case ("Op_cast_defi",
-      map_operator_cast_definition env x
-    )
-  | `Op_cast_decl x -> R.Case ("Op_cast_decl",
-      map_operator_cast_declaration env x
-    )
-  | `Friend_decl x -> R.Case ("Friend_decl",
-      map_friend_declaration env x
-    )
-  | `Access_spec_COLON (v1, v2) -> R.Case ("Access_spec_COLON",
-      let v1 = map_access_specifier env v1 in
-      let v2 = (* ":" *) token env v2 in
-      R.Tuple [v1; v2]
-    )
-  | `Alias_decl x -> R.Case ("Alias_decl",
-      map_alias_declaration env x
-    )
-  | `Using_decl x -> R.Case ("Using_decl",
-      map_using_declaration env x
-    )
-  | `Type_defi x -> R.Case ("Type_defi",
-      map_type_definition env x
-    )
-  | `Static_assert_decl x -> R.Case ("Static_assert_decl",
-      map_static_assert_declaration env x
+  | `Semg_meta tok -> R.Case ("Semg_meta",
+      (* semgrep_metavar *) token env tok
     )
   )
 
@@ -3991,6 +4011,24 @@ and map_initializer_pair (env : env) (x : CST.initializer_pair) =
       R.Tuple [v1; v2; v3]
     )
   )
+
+and map_inline_method_definition (env : env) ((v1, v2, v3) : CST.inline_method_definition) =
+  let v1 = map_declaration_specifiers env v1 in
+  let v2 = map_field_declarator env v2 in
+  let v3 =
+    (match v3 with
+    | `Choice_comp_stmt x -> R.Case ("Choice_comp_stmt",
+        map_anon_choice_comp_stmt_e6a11e2 env x
+      )
+    | `Defa_meth_clause x -> R.Case ("Defa_meth_clause",
+        map_default_method_clause env x
+      )
+    | `Delete_meth_clause x -> R.Case ("Delete_meth_clause",
+        map_delete_method_clause env x
+      )
+    )
+  in
+  R.Tuple [v1; v2; v3]
 
 and map_labeled_statement (env : env) ((v1, v2, v3) : CST.labeled_statement) =
   let v1 =
@@ -4942,7 +4980,7 @@ and map_seh_try_statement (env : env) ((v1, v2, v3) : CST.seh_try_statement) =
 
 and map_semgrep_typed_metavar (env : env) ((v1, v2) : CST.semgrep_typed_metavar) =
   let v1 = map_type_descriptor env v1 in
-  let v2 = (* pattern \$[A-Z_][A-Z_0-9]* *) token env v2 in
+  let v2 = (* semgrep_metavar *) token env v2 in
   R.Tuple [v1; v2]
 
 and map_sizeof_expression (env : env) (x : CST.sizeof_expression) =
